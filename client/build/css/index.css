@@ -1,17 +1,75 @@
 body {
-  background-color: #060606 !important;
-  color: #FFF !important;
+  background-color: #171c25 !important;
   font-family: 'Roboto', sans-serif !important;
+  font-size: 15px !important;
 }
 
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+#main-nav {
+  background-color: #060606 !important;
+  height: 50px;
 }
 
-.center form {
-  display: inline-block;
-  text-align: left;
+#main-nav a {
+  color: #FFF;
+}
+
+#nav-title {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+#logo {
+  height:50px;
+  margin-right: 10px;
+}
+
+#ladder li {
+  border-color: #111;
+  background-color: #000;
+  color: #D8D8D8;
+}
+
+#ladder-title .panel-heading {
+  background-color: #980008;
+  color: #E8E8E8;
+}
+
+#ladder-title .panel-body {
+  background-color: #980008;
+  color: #E8E8E8
+}
+
+.panel {
+  border: 0 !important;
+}
+
+.background-red {
+  background-color: #980008 !important;
+  color: #FFF !important;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.navbar, .navbar div, .navbar-brand, .navbar-header {
+  min-height: 80px !important;
+}
+
+form .btn {
+  margin: 0px 15px;
+}
+
+.btn .glyphicon {
+  margin-right: 5px;
+}
+
+.ladder-icon {
+  height: 50px;
+  border-radius: 100px;
+  margin-right: 5px;
+}
+
+.ladder-listing {
+  line-height: 50px;
 }
