@@ -6,6 +6,17 @@ export default class LadderPage extends React.Component {
   render() {
     return(
       <div className="container">
+        <div className="row">
+          <div className="col-xs-4"></div>
+          <div className="col-xs-4"></div>
+          <div className="col-xs-4">
+            <div id="ladder-search">
+              <form>
+                <input type="text" placeholder="Search" />
+              </form>
+            </div>
+          </div>
+        </div>
         <div id="ladder-title" className="panel panel-default">
           <div className="panel-heading text-center"><h4>1v1 Ladder</h4></div>
           <div className="panel-body">
@@ -28,6 +39,7 @@ export default class LadderPage extends React.Component {
             </div>
           </div>
         </div>
+
         <ul id="ladder" className="list-group">
           <LadderListing index="1" summonerName="Vangogh" name="Kai Matsuda" kp="100"  />
           <li className="list-group-item"></li>
