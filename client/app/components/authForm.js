@@ -18,7 +18,7 @@ export default class AuthForm extends React.Component {
   }
 
   handleSubmit(e) {
-    
+
   }
 
   render() {
