@@ -1,27 +1,16 @@
-import { FETCH_LADDER, REQUEST } from '../actions/ladder.js'
+import { FETCH_LADDER } from '../actions/ladder.js'
 import { combineReducers } from 'redux'
 
 function ladder(state = {
-  isFetching = false,
-  ladder = []
+  status: 0,
+  data: []
 }, action) {
   switch(action.type) {
     case FETCH_LADDER:
-      switch(action.status) {
-        case REQUEST:
-          return Object.assign({}, state, {
-            isFetching: true
-          })
-        case 200:
-          return Object.assign({}, state, {
-            isFetching: false,
-            ladder: action.ladder
-          })
-        default:
-          return Object.assign({}, state, {
-            isFetching: false
-          })
-      }
+      return Object.assign({}, state, {
+        status: action.status,
+        data: action.data
+      })
     default:
       return state
   }

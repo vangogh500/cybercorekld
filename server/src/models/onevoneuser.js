@@ -5,7 +5,7 @@ var OnevoneUserSchema = mongoose.Schema({
   ign: String,
   name: String,
   email: String,
-  kp: { type: Number, default: 1000 },
+  kp: { type: Number, default: 1000, index: true },
   lastGameDate: { type: Date },
   matches: []
 })

@@ -37,4 +37,18 @@ module.exports = function(app) {
       }
     })
   })
+
+  app.get('/api/onevone/ladder', function(req,res) {
+    OneVOneUser.find({}).sort({ kp: -1 }).exec(function(err, ladder) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(ladder) {
+        res.send(ladder)
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
 }

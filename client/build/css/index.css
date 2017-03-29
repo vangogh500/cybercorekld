@@ -98,3 +98,13 @@ form .btn {
 .ladder-listing {
   line-height: 50px;
 }
+
+.spinner {
+  transform: scale(2) !important;
+  margin-top: 200px !important;
+  margin-bottom: 200px !important;
+}
+
+.spinner .sk-cube {
+  background-color: #980008 !important;
+}

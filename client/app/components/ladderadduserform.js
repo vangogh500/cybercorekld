@@ -12,12 +12,18 @@ export default class LadderAddUserForm extends React.Component {
       email: ""
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  handleClick(e) {
+    e.preventDefault()
+    
   }
 
   render() {
@@ -44,7 +50,7 @@ export default class LadderAddUserForm extends React.Component {
           <label>Email</label>
           <input name="email" type="text" className="form-control" onChange={this.handleChange} />
         </div>
-        <button type="button" className={"btn btn-danger waves-effect pull-right " + (valid ? "" : "disabled")}>
+        <button type="button" className={"btn btn-danger waves-effect pull-right " + (valid ? "" : "disabled")} onClick={this.handleClick}>
           <span className="glyphicon glyphicon-lock"></span>Login
         </button>
         <div className="clearfix"></div>

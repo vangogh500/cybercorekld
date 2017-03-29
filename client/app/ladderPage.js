@@ -1,59 +1,77 @@
 import React from 'react'
+import thunkMiddleware from 'redux-thunk'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import ladderApp from './reducers/ladder.js'
 
-import LadderListing from './components/ladderlisting.js'
+let store = createStore(ladderApp, applyMiddleware(thunkMiddleware))
+console.log(store.getState())
+
+import LadderSync from './containers/laddersync.js'
 import LadderAddUser from './components/ladderadduser.js'
 
 export default class LadderPage extends React.Component {
   render() {
+    var ladder = [
+      {
+        name: "Kai Matsuda",
+        ign: "Vangogh500",
+        _id: 123344532,
+        kp: 1000
+      },
+      {
+        name: "Kevin Doan",
+        ign: "DoanDy",
+        _id: 1334243,
+        kp: 800
+      }
+    ]
     return(
-      <div className="row">
-        <div className="col-xs-1">
-        </div>
-        <div className="col-xs-9">
-          <div className="row">
-            <div className="col-xs-4"></div>
-            <div className="col-xs-4"></div>
-            <div className="col-xs-4">
-              <div id="ladder-search">
-                <form>
-                  <input type="text" placeholder="Search" />
-                </form>
-              </div>
-            </div>
+      <Provider store={store}>
+        <div className="row">
+          <div className="col-xs-1">
           </div>
-          <div id="ladder-title" className="panel panel-default">
-            <div className="panel-heading text-center"><h4>1v1 Ladder</h4></div>
-            <div className="panel-body">
-              <div className="row">
-                <div className="col-xs-1">
-                  Placing
-                </div>
-                <div className="col-xs-5">
-                  IGN
-                </div>
-                <div className="col-xs-2">
-                  Name
-                </div>
-                <div className="col-xs-2">
-                  Time Left Til Decay
-                </div>
-                <div className="col-xs-2">
-                  KP
+          <div className="col-xs-9">
+            <div className="row">
+              <div className="col-xs-4"></div>
+              <div className="col-xs-4"></div>
+              <div className="col-xs-4">
+                <div id="ladder-search">
+                  <form>
+                    <input type="text" placeholder="Search" />
+                  </form>
                 </div>
               </div>
             </div>
+            <div id="ladder-title" className="panel panel-default">
+              <div className="panel-heading text-center"><h4>1v1 Ladder</h4></div>
+              <div className="panel-body">
+                <div className="row">
+                  <div className="col-xs-1">
+                    Placing
+                  </div>
+                  <div className="col-xs-5">
+                    IGN
+                  </div>
+                  <div className="col-xs-2">
+                    Name
+                  </div>
+                  <div className="col-xs-2">
+                    Time Left Til Decay
+                  </div>
+                  <div className="col-xs-2">
+                    KP
+                  </div>
+                </div>
+              </div>
+            </div>
+            <LadderSync />
           </div>
-
-          <ul id="ladder" className="list-group">
-            <LadderListing index="1" summonerName="Vangogh" name="Kai Matsuda" kp="100"  />
-            <li className="list-group-item"></li>
-            <li className="list-group-item">Test</li>
-          </ul>
+          <div className="col-xs-2">
+            <LadderAddUser />
+          </div>
         </div>
-        <div className="col-xs-2">
-          <LadderAddUser />
-        </div>
-      </div>
+      </Provider>
     )
   }
 }
