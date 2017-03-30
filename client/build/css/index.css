@@ -13,6 +13,17 @@ body {
   color: #FFF;
 }
 
+#main-nav li {
+  color: #FFF;
+  font-weight: bold;
+  line-height: 80px;
+  margin-right: 25px;
+}
+
+#main-nav li .glyphicon {
+  margin-right: 10px;
+}
+
 #nav-title {
   font-weight: bold;
   font-size: 22px;
@@ -122,5 +133,9 @@ form .btn {
 }
 
 .success-color {
+  color: #FFF;
+}
+
+.danger-color {
   color: #FFF;
 }

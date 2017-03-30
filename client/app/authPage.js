@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AuthForm from './components/authForm.js'
+import AuthFormSync from './containers/authFormSync.js'
 
 export default class AuthPage extends React.Component {
   render() {
@@ -9,7 +9,7 @@ export default class AuthPage extends React.Component {
         <div className="panel panel-default">
           <div className="panel-heading text-center"><h4>Authorize</h4></div>
           <div className="panel-body">
-            <AuthForm />
+            <AuthFormSync />
           </div>
         </div>
       </div>

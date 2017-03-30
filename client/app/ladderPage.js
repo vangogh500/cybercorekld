@@ -2,10 +2,11 @@ import React from 'react'
 import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import { browserHistory } from 'react-router'
+
 import ladderApp from './reducers/ladder.js'
 
 let store = createStore(ladderApp, applyMiddleware(thunkMiddleware))
-console.log(store.getState())
 
 import LadderSync from './containers/laddersync.js'
 import LadderAddUser from './components/ladderadduser.js'

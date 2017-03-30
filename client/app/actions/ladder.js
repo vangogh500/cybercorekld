@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch'
 
 export const FETCH_LADDER = 'FETCH_LADDER'
 export const STATUS_REQUEST = 0
-export const ADD_USER = 'ADD_USER'
+export const ADD_ENTRY = 'ADD_ENTRY'
 
 function requestLadder() {
   return {
@@ -19,10 +19,10 @@ function receiveLadder(status, json) {
   }
 }
 
-function addUser(user) {
+function addEntry(entry) {
   return {
-    type: ADD_USER,
-    user
+    type: ADD_ENTRY,
+    entry
   }
 }
 
@@ -43,9 +43,9 @@ export function fetchLadder() {
   }
 }
 
-export function addToLadder(user, cb) {
+export function addEntryToLadder(user, cb) {
   return function(dispatch) {
-    return fetch('http://localhost:3000/api/onevone/user', {
+    return fetch('http://localhost:3000/api/auth/onevone/user', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -54,8 +54,13 @@ export function addToLadder(user, cb) {
       body: JSON.stringify({ user: user })
     }).then(response => resolve(response, (status, data) => {
         cb(status)
-        var newUser = Object.assign({}, user, data)
-        dispatch(addUser(newUser))
+        var newUser = Object.assign({}, user, { _id: data.userId })
+        var newEntry = {
+          _id: data.entryId,
+          _user: newUser,
+          kp: 1000
+        };
+        dispatch(addEntry(newEntry))
       }))
   }
 }

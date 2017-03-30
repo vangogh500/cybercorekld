@@ -1,19 +1,19 @@
 var credentials = require('./credentials.js')
 var jwt = require('jsonwebtoken')
 
-var OneVOneListing = require('./models/onevoneuser.js')
+var OneVOneListing = require('./models/onevoneladder.js')
 var User = require('./models/user.js')
 
 module.exports = function(app) {
-  app.post('/login', function(req,res) {
+  app.post('/api/login', function(req,res) {
     console.log(req.body)
     if(req.body.user == credentials.credentials.user && req.body.password == credentials.credentials.password) {
-      jwt.sign({}, credentials.jwt.secret, { expiresIn: '7 days'}, function(err, token) {
+      jwt.sign({ user: 'admin' }, credentials.jwt.secret, { expiresIn: '7 days'}, function(err, token) {
         if(err) {
           res.status(500).send()
         }
         else {
-          res.send(token)
+          res.send({token: token, user: 'admin'})
         }
       })
     }
@@ -22,7 +22,7 @@ module.exports = function(app) {
     }
   })
 
-  app.post('/api/onevone/user', function(req,res) {
+  app.post('/api/auth/onevone/user', function(req,res) {
     var newUser = new User({
       csm: req.body.user.csm,
       name: req.body.user.name,
@@ -30,21 +30,21 @@ module.exports = function(app) {
       email: req.body.user.email
     })
     var newOneVOneListing = new OneVOneListing({
-      user: newUser._id
+      _user: newUser._id
     })
     newUser.save(function(err) {
       if(err) { res.status(500).send() }
       else {
         newOneVOneListing.save(function(err) {
           if(err) { res.status(500).send() }
-          else { res.send({ _id: newUser._id }) }
+          else { res.send({ userId: newUser._id, entryId: newOneVOneListing._id }) }
         })
       }
     })
   })
 
   app.get('/api/onevone/ladder', function(req,res) {
-    OneVOneUser.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
+    OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
       if(err) {
         res.status(500).send()
       }

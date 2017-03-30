@@ -27,7 +27,9 @@ export default class LadderAddUserForm extends React.Component {
     e.preventDefault()
     this.setState({ status: 0 })
     var user = Object.assign({}, this.state)
+    delete user.msg
     delete user.status
+    console.log(user)
     this.props.onClick(user, (status) => {
       var msg = ''
       switch(status) {
@@ -125,7 +127,7 @@ export default class LadderAddUserForm extends React.Component {
                 <input name="email" type="text" className="form-control" onChange={this.handleChange} />
               </div>
               <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
-                <span className="glyphicon glyphicon-lock"></span>Login
+                Submit
               </button>
               <div className="clearfix"></div>
             </form>

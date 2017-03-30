@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { addToLadder } from '../actions/ladder.js'
+import { addEntryToLadder } from '../actions/ladder.js'
 import LadderAddUserForm from '../components/ladderadduserform.js'
 
 const mapStateToProps = (state) => {
@@ -10,8 +10,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onClick: (user, cb) => {
-      user.kp = 1000
-      dispatch(addToLadder(user, cb))
+      dispatch(addEntryToLadder(user, cb))
     }
   }
 }
