@@ -12,20 +12,6 @@ import LadderAddUser from './components/ladderadduser.js'
 
 export default class LadderPage extends React.Component {
   render() {
-    var ladder = [
-      {
-        name: "Kai Matsuda",
-        ign: "Vangogh500",
-        _id: 123344532,
-        kp: 1000
-      },
-      {
-        name: "Kevin Doan",
-        ign: "DoanDy",
-        _id: 1334243,
-        kp: 800
-      }
-    ]
     return(
       <Provider store={store}>
         <div className="row">

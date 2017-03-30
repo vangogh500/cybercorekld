@@ -33,7 +33,7 @@ module.exports = function(app) {
         res.status(500).send()
       }
       else {
-        res.send()
+        res.send({ _id: newUser._id })
       }
     })
   })

@@ -3,7 +3,7 @@ import React from 'react'
 export default class LadderListing extends React.Component {
   render() {
     return(
-      <li className="list-group-item ladder-listing">
+      <li className="list-group-item">
         <div className="row">
           <div className="col-xs-1">
             {this.props.index + "."}

@@ -1,4 +1,4 @@
-import { FETCH_LADDER } from '../actions/ladder.js'
+import { FETCH_LADDER, ADD_USER } from '../actions/ladder.js'
 import { combineReducers } from 'redux'
 
 function ladder(state = {
@@ -10,6 +10,10 @@ function ladder(state = {
       return Object.assign({}, state, {
         status: action.status,
         data: action.data
+      })
+    case ADD_USER:
+      return Object.assign({}, state, {
+        data: [...state.data, action.user ]
       })
     default:
       return state

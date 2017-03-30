@@ -27,6 +27,13 @@ body {
   border-color: #111;
   background-color: #000;
   color: #D8D8D8;
+  line-height: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#ladder li:hover {
+  background-color: #111;
 }
 
 #ladder-title .panel-heading {
@@ -95,10 +102,6 @@ form .btn {
   margin-right: 5px;
 }
 
-.ladder-listing {
-  line-height: 50px;
-}
-
 .spinner {
   transform: scale(2) !important;
   margin-top: 200px !important;
@@ -107,4 +110,17 @@ form .btn {
 
 .spinner .sk-cube {
   background-color: #980008 !important;
+}
+
+.card-block {
+  padding: 20px;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-right: 25px;
+}
+
+.success-color {
+  color: #FFF;
 }
