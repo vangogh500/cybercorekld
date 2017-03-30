@@ -1,13 +1,11 @@
 var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
-var OnevoneUserSchema = mongoose.Schema({
-  csm: String,
-  ign: String,
-  name: String,
-  email: String,
+var OnevoneSchema = mongoose.Schema({
+  _user: { type: Schema.Types.ObjectId, ref: 'User'},
   kp: { type: Number, default: 1000, index: true },
   lastGameDate: { type: Date },
   matches: []
 })
 
-module.exports = mongoose.model('OneVOneUser', OnevoneUserSchema)
+module.exports = mongoose.model('OneVOneLadder', OnevoneSchema)
