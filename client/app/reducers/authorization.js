@@ -1,8 +1,6 @@
-import { combineReducers } from 'redux'
-
 import { FETCH_TOKEN, STATUS_REQUEST } from '../actions/authorization.js'
 
-function authorization(state = {
+export function authorization(state = {
   status: -1,
   user: '',
   token: ''
@@ -18,9 +16,3 @@ function authorization(state = {
       return state
   }
 }
-
-let rootReducer = combineReducers({
-  authorization
-})
-
-export default rootReducer

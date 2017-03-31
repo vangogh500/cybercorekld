@@ -27,9 +27,12 @@ function addEntry(entry) {
 }
 
 function resolve(response, cb) {
-  response.json().then(json =>
-    cb(response.status, json)
-  )
+  if(response.status !== 200) { cb(response.status, null) }
+  else {
+    response.json().then(json =>
+      cb(response.status, json)
+    )
+  }
 }
 
 export function fetchLadder() {

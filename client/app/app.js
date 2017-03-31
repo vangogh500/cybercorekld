@@ -12,9 +12,9 @@ import AuthSection from './authSection.js'
 
 import { loginFromStorage } from './actions/authorization.js'
 
-import authApp from './reducers/authorization.js'
+import app from './reducers/app.js'
 
-let store = createStore(authApp, applyMiddleware(thunkMiddleware))
+let store = createStore(app, applyMiddleware(thunkMiddleware))
 store.dispatch(loginFromStorage())
 
 ReactDOM.render((

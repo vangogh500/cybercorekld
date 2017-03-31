@@ -1,7 +1,6 @@
 import { FETCH_LADDER, ADD_ENTRY } from '../actions/ladder.js'
-import { combineReducers } from 'redux'
 
-function ladder(state = {
+export function ladder(state = {
   status: 0,
   data: []
 }, action) {
@@ -19,9 +18,3 @@ function ladder(state = {
       return state
   }
 }
-
-let rootReducer = combineReducers({
-  ladder
-})
-
-export default rootReducer
