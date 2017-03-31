@@ -40,7 +40,6 @@ export default class AuthForm extends React.Component {
   }
 
   handleStatus(status) {
-
     switch(status) {
       case -1:
         return (

@@ -34,6 +34,8 @@ export default class Ladder extends React.Component {
                     index={idx + 1}
                     summonerName={listing._user.ign}
                     name={listing._user.name}
+                    csm={listing._user.csm}
+                    email={listing._user.email}
                     kp={listing.kp}  />
                 )
               })

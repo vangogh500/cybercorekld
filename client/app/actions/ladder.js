@@ -36,10 +36,15 @@ function resolve(response, cb) {
 }
 
 export function fetchLadder() {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(requestLadder())
 
-    return fetch('http://localhost:3000/api/onevone/ladder')
+    return fetch('http://localhost:3000/api/auth/onevone/ladder', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + getState().authorization.token
+      }
+    })
       .then(response => resolve(response, (status, data) => {
         dispatch(receiveLadder(status, data))
       }))
@@ -47,12 +52,13 @@ export function fetchLadder() {
 }
 
 export function addEntryToLadder(user, cb) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     return fetch('http://localhost:3000/api/auth/onevone/user', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getState().authorization.token
       },
       body: JSON.stringify({ user: user })
     }).then(response => resolve(response, (status, data) => {

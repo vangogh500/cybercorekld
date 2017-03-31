@@ -139,3 +139,12 @@ form .btn {
 .danger-color {
   color: #FFF;
 }
+
+.line-height-30 {
+  line-height: 30px;
+}
+
+.profile-label {
+  font-weight: bold;
+  margin-right: 10px;
+}

@@ -4,6 +4,16 @@ var jwt = require('jsonwebtoken')
 var OneVOneListing = require('./models/onevoneladder.js')
 var User = require('./models/user.js')
 
+
+function verifyToken(token, res, cb) {
+  jwt.verify(token, credentials.jwt.secret, function(err, data) {
+    if(err) { res.status(401).send() }
+    else {
+      cb(data)
+    }
+  })
+}
+
 module.exports = function(app) {
   app.post('/api/login', function(req,res) {
     console.log(req.body)
@@ -43,17 +53,34 @@ module.exports = function(app) {
     })
   })
 
-  app.get('/api/onevone/ladder', function(req,res) {
-    OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
-      if(err) {
-        res.status(500).send()
-      }
-      else if(ladder) {
-        res.send(ladder)
-      }
-      else {
-        res.status(404).send()
-      }
-    })
+  app.get('/api/auth/onevone/ladder', function(req,res) {
+    if(req.headers.authorization) {
+      var token = req.headers.authorization.slice(7)
+      jwt.verify(token, credentials.jwt.secret, function(err, data) {
+        if(err) { res.status(401).send() }
+        else {
+          console.log(data.user)
+          if(data.user === 'admin') {
+            OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
+              if(err) {
+                res.status(500).send()
+              }
+              else if(ladder) {
+                res.send(ladder)
+              }
+              else {
+                res.status(404).send()
+              }
+            })
+          }
+          else {
+            res.status(401).send()
+          }
+        }
+      })
+    }
+    else {
+      res.status(401).send()
+    }
   })
 }
