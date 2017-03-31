@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
 import AuthForm from '../components/authForm'
-import { login } from '../actions/credentials.js'
+import { loginFromServer } from '../actions/authorization.js'
 
 const mapStateToProps = (state) => {
   return {
-    status: state.credentials.status
+    status: state.authorization.status
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (creds, cb) => {
-      dispatch(login(creds, cb))
+    onSubmit: (creds) => {
+      dispatch(loginFromServer(creds.user, creds.password))
     }
   }
 }

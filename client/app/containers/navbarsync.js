@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import Navbar from '../components/navbar.js'
-import { logout } from '../actions/credentials.js'
+import { logout } from '../actions/authorization.js'
 
 const mapStateToProps = (state) => {
   return {
-    status: state.credentials.status,
-    user: state.credentials.user
+    status: state.authorization.status,
+    user: state.authorization.user
   }
 }
 

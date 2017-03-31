@@ -36,27 +36,11 @@ export default class AuthForm extends React.Component {
     var creds = Object.assign({}, this.state)
     delete creds.msg
 
-    this.props.onSubmit(creds, (status) => {
-      var msg = ''
-      switch(status) {
-        case 200:
-          msg = 'Success! Redirecting...'
-          break
-        case 401:
-          msg = 'Invalid login'
-          break
-        default:
-          msg = 'Oops something went wrong!'
-      }
-      this.setState({
-        user: '',
-        password: '',
-        msg
-      })
-    })
+    this.props.onSubmit(creds)
   }
 
   handleStatus(status) {
+
     switch(status) {
       case -1:
         return (
@@ -79,11 +63,15 @@ export default class AuthForm extends React.Component {
           </div>
         )
       default:
+        var msg = ""
+        if(status == 200) msg = "Success! Redirecting..."
+        else if(status == 401) msg = "Invalid login"
+        else if(status == 500) msg = "Oops, something went wrong!"
         return (
-          <div className={"card " + ((this.props.status == 200) ? "success-color" : "danger-color")}>
+          <div className={"card " + ((status == 200) ? "success-color" : "danger-color")}>
             <div className="card-block">
               <span className="card-title">{status}</span>
-              <span className="card-text">{this.state.msg}</span>
+              <span className="card-text">{msg}</span>
             </div>
           </div>
         )
