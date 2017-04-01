@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import NavbarSync from './containers/navbarsync.js'
 import AuthPage from './authPage.js'
 import LadderPage from './ladderPage.js'
+import AuthHomePage from './AuthHomePage.js'
 import AuthSectionSync from './containers/authSectionSync.js'
 
 import { loginFromStorage } from './actions/authorization.js'
@@ -23,6 +24,7 @@ ReactDOM.render((
         <Route path="/" component={NavbarSync}>
           <Route path="/auth" component={AuthSectionSync}>
             <IndexRoute component={AuthPage} />
+            <Route path="/auth/home" component={AuthHomePage} />
             <Route path="/auth/ladder" component={LadderPage} />
           </Route>
         </Route>

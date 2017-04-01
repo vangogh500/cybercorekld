@@ -16,12 +16,12 @@ export default class AuthForm extends React.Component {
 
   componentWillMount() {
     if(this.props.status == 200) {
-      browserHistory.push('/auth/ladder')
+      browserHistory.push('/auth/home')
     }
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.status == 200) {
-      browserHistory.push('/auth/ladder')
+      browserHistory.push('/auth/home')
     }
   }
 
