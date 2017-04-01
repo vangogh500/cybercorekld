@@ -6,23 +6,14 @@ import { browserHistory } from 'react-router'
 
 import LadderSync from './containers/laddersync.js'
 import LadderAddUser from './components/ladderadduser.js'
+import LadderLeftNav from './components/ladderleftnav.js'
 
 export default class LadderPage extends React.Component {
   render() {
     return(
       <div className="row">
         <div className="col-xs-2">
-          <div id="left-nav" className="panel panel-default z-depth-2">
-            <div className="panel-heading text-center"><h4>Navigate</h4></div>
-            <ul className="nav nav-pills nav-stacked" role="tablist">
-              <li className="nav-item active">
-                  <a className="nav-link" data-toggle="tab" role="tab">Ladder</a>
-              </li>
-              <li className="nav-item">
-                  <a className="nav-link" data-toggle="tab" role="tab">Matches</a>
-              </li>
-            </ul>
-          </div>
+          <LadderLeftNav />
         </div>
         <div className="col-xs-8">
           <div className="row">

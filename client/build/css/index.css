@@ -75,15 +75,25 @@ body {
   border-radius: 0px 4px 4px 0px;
   top: 100px;
   width: 15%;
+  background-color: #171c25;
 }
 
 #left-nav .panel-heading {
+  border-radius: 0px;
   background: #000;
   color: #FFF;
   border-bottom: none;
+  width: calc(100% - 7px)
 }
 
+#left-nav a {
+  border-radius: 0px;
+}
 
+#left-nav li:not(.active) {
+  background-color: #FFF;
+  width: calc(100% - 7px)
+}
 
 .modal-form {
   padding: 10px;
@@ -96,7 +106,6 @@ body {
 .panel {
   border: 0 !important;
 }
-
 
 .nav-item.active a {
   background-color: #980008 !important;
