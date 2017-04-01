@@ -57,10 +57,6 @@ body {
   color: #E8E8E8
 }
 
-#ladder-search {
-
-}
-
 #ladder-search input {
   border-radius: 10px;
   background-color: #E8E8E8;
@@ -74,6 +70,21 @@ body {
   top: 100px;
 }
 
+#left-nav {
+  position: fixed;
+  border-radius: 0px 4px 4px 0px;
+  top: 100px;
+  width: 15%;
+}
+
+#left-nav .panel-heading {
+  background: #000;
+  color: #FFF;
+  border-bottom: none;
+}
+
+
+
 .modal-form {
   padding: 10px;
 }
@@ -84,6 +95,11 @@ body {
 
 .panel {
   border: 0 !important;
+}
+
+
+.nav-item.active a {
+  background-color: #980008 !important;
 }
 
 .background-red {
