@@ -5,7 +5,7 @@ var OnevoneSchema = mongoose.Schema({
   _user: { type: Schema.Types.ObjectId, ref: 'Users'},
   kp: { type: Number, default: 1000, index: true },
   lastGameDate: { type: Date },
-  matches: []
+  matches: [{ type: Schema.Types.ObjectId, ref: 'LadderMatches' }]
 })
 
 module.exports = mongoose.model('OneVOneLadder', OnevoneSchema)

@@ -3,15 +3,27 @@ var jwt = require('jsonwebtoken')
 
 var OneVOneListing = require('./models/onevoneladder.js')
 var User = require('./models/user.js')
+var LadderMatch = require('./models/laddermatch.js')
 
+var elo = require('./lib/elo.js')
 
-function verifyToken(token, res, cb) {
-  jwt.verify(token, credentials.jwt.secret, function(err, data) {
-    if(err) { res.status(401).send() }
-    else {
-      cb(data)
-    }
-  })
+function verifyToken(req, res, next) {
+
+  if(req.headers.authorization) {
+    var token = req.headers.authorization.slice(7)
+    jwt.verify(token, credentials.jwt.secret, function(err, data) {
+      if(err) { res.status(401).send() }
+      else if(data.user == 'admin') {
+        next()
+      }
+      else {
+        res.status(401).send()
+      }
+    })
+  }
+  else {
+    res.status(401).send()
+  }
 }
 
 module.exports = function(app) {
@@ -31,7 +43,7 @@ module.exports = function(app) {
     }
   })
 
-  app.post('/api/auth/onevone/user', function(req,res) {
+  app.post('/api/auth/onevone/user', verifyToken, function(req,res) {
     var newUser = new User({
       csm: req.body.user.csm,
       name: req.body.user.name,
@@ -52,34 +64,39 @@ module.exports = function(app) {
     })
   })
 
-  app.get('/api/auth/onevone/ladder', function(req,res) {
-    if(req.headers.authorization) {
-      var token = req.headers.authorization.slice(7)
-      jwt.verify(token, credentials.jwt.secret, function(err, data) {
-        if(err) { res.status(401).send() }
-        else {
-          console.log(data.user)
-          if(data.user === 'admin') {
-            OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
-              if(err) {
-                res.status(500).send()
-              }
-              else if(ladder) {
-                res.send(ladder)
-              }
-              else {
-                res.status(404).send()
-              }
-            })
-          }
-          else {
-            res.status(401).send()
-          }
-        }
-      })
-    }
-    else {
-      res.status(401).send()
-    }
+  app.get('/api/auth/onevone/ladder', verifyToken, function(req,res) {
+    OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(ladder) {
+        res.send(ladder)
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
+
+  app.post('/api/auth/onevone/match', function(req,res) {
+    OneVOneListing.find({ $or: [{ _user: req.body.player_one._user}, { _user: req.body.player_two._user }]}, function(err, listings) {
+      if(err) { res.status(500).send() }
+      else {
+        var kp_one = listings[0].kp
+        var kp_two = listings[1].kp
+
+        var d_kp = elo.calculate(kp_one, kp_two, listings[0].matches.length, listings[1].matches.length, ((req.body.winner == 'player_one') ? 0 : 1))
+        var newMatch = new LadderMatch({
+          ladder_type: '1v1',
+          player_one: req.body.player_one,
+          player_two: req.body.player_two,
+          winner: req.body.winner,
+          win_condition: req.body.win_condition,
+          date: req.body.date,
+          d_kp
+        })
+        console.log(newMatch)
+      }
+    })
   })
 }
