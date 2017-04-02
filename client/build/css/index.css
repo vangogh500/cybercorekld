@@ -173,3 +173,8 @@ form .btn {
   font-weight: bold;
   margin-right: 10px;
 }
+
+.black {
+  background-color: #000;
+  color: #E8E8E8;
+}
