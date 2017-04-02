@@ -16,7 +16,6 @@ function verifyToken(token, res, cb) {
 
 module.exports = function(app) {
   app.post('/api/login', function(req,res) {
-    console.log(req.body)
     if(req.body.user == credentials.credentials.user && req.body.password == credentials.credentials.password) {
       jwt.sign({ user: 'admin' }, credentials.jwt.secret, { expiresIn: '7 days'}, function(err, token) {
         if(err) {

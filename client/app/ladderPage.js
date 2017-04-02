@@ -1,20 +1,12 @@
 import React from 'react'
-import thunkMiddleware from 'redux-thunk'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import { browserHistory } from 'react-router'
 
 import LadderSync from './containers/laddersync.js'
 import LadderAddUser from './components/ladderadduser.js'
-import LadderLeftNav from './components/ladderleftnav.js'
 
 export default class LadderPage extends React.Component {
   render() {
     return(
-      <div className="row">
-        <div className="col-xs-2">
-          <LadderLeftNav />
-        </div>
+      <div>
         <div className="col-xs-8">
           <div className="row">
             <div className="col-xs-4"></div>

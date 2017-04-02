@@ -1,31 +1,35 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default class AuthHomePage extends React.Component {
   render() {
     return (
       <div className="container">
+        <h3 className="text-center text-white">Admin Panel</h3>
         <div className="row">
           <div className="col-xs-4">
-            <div className="card black">
-              <div className="card-block">
-                <h4 className="card-title text-center">Ladders</h4>
+            <Link className="card" to='/auth/onevone/ladder'>
+              <div className="card-block text-center black-nav-item hoverable">
+                <h4 className="card-title">Ladders</h4>
+                <h2><i className="fa fa-list" aria-hidden="true"></i></h2>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="col-xs-4">
-            <div className="card black">
-              <div className="card-block">
-                <h4 className="card-title text-center">Tournaments</h4>
+            <a className="card">
+              <div className="card-block text-center black-nav-item hoverable">
+                <h4 className="card-title">Tournaments</h4>
+                <h2><i className="fa fa-trophy" aria-hidden="true"></i></h2>
               </div>
-            </div>
+            </a>
           </div>
           <div className="col-xs-4">
-            <div className="card black">
-              <div className="card-block">
-                <h4 className="card-title text-center">Users</h4>
-                <h5 className="glyphicon glyphicon-menu-hamburger"></h5>
+            <a className="card">
+              <div className="card-block text-center black-nav-item hoverable">
+                <h4 className="card-title">Users</h4>
+                <h2><i className="fa fa-user" aria-hidden="true"></i></h2>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
