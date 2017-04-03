@@ -26,10 +26,10 @@ export default class LadderPage extends React.Component {
                 <div className="col-xs-1">
                   Placing
                 </div>
-                <div className="col-xs-5">
+                <div className="col-xs-4">
                   IGN
                 </div>
-                <div className="col-xs-2">
+                <div className="col-xs-3">
                   Name
                 </div>
                 <div className="col-xs-2">

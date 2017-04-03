@@ -7,7 +7,7 @@ export default class LadderSection extends React.Component {
     return (
       <div className="row">
         <div className="col-xs-2">
-          <LadderLeftNav />
+          <LadderLeftNav active={this.props.location.pathname.slice(14)} />
         </div>
         {this.props.children}
       </div>

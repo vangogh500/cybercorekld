@@ -64,11 +64,11 @@ export default class LadderListing extends React.Component {
             <div className="col-xs-1">
               {this.props.index + "."}
             </div>
-            <div className="col-xs-5">
+            <div className="col-xs-4">
               <img className="ladder-icon" src="http://ddragon.leagueoflegends.com/cdn/7.5.1/img/profileicon/23.png" />
               <span>{this.props.summonerName}</span>
             </div>
-            <div className="col-xs-2">
+            <div className="col-xs-3">
               {this.props.name}
             </div>
             <div className="col-xs-2">

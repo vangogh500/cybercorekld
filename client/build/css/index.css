@@ -86,13 +86,13 @@ body {
   width: calc(100% - 7px)
 }
 
-#left-nav a {
-  border-radius: 0px;
+#left-nav li {
+  transition: background-color 1s, width 1s;
 }
 
 #left-nav li:not(.active) {
   background-color: #FFF;
-  width: calc(100% - 7px)
+  width: calc(100% - 7px);
 }
 
 .modal-form {
