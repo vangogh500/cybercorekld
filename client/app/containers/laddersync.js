@@ -4,6 +4,9 @@ import { fetchLadder } from '../actions/ladder.js'
 import Ladder from '../components/ladder.js'
 
 const mapStateToProps = (state) => {
+  console.log(state.ladder.ladder.map((id) => {
+    state.ladder.ladderEntries[id]
+  }))
   return {
     data: state.ladder.data,
     status: state.ladder.status
@@ -12,9 +15,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    init: () => {
-      dispatch(fetchLadder())
-    }
   }
 }
 

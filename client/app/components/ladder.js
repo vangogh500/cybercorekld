@@ -2,9 +2,6 @@ import React from 'react'
 import LadderListing from './ladderlisting.js'
 
 export default class Ladder extends React.Component {
-  componentDidMount() {
-    this.props.init()
-  }
   render() {
     switch(this.props.status) {
       case 0:

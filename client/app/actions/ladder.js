@@ -11,18 +11,19 @@ function requestLadder() {
   }
 }
 
-function receiveLadder(status, json) {
+function receiveLadder(status, data) {
   return {
     type: FETCH_LADDER,
     status,
-    data: json
+    data
   }
 }
 
-function addEntry(entry) {
+function addEntry(entry, user) {
   return {
     type: ADD_ENTRY,
-    entry
+    entry,
+    user
   }
 }
 
@@ -46,7 +47,16 @@ export function fetchLadder() {
       }
     })
       .then(response => resolve(response, (status, data) => {
-        dispatch(receiveLadder(status, data))
+        console.log(data)
+        data.forEach((entry) => {
+          entry.id = entry._id
+          delete entry._id
+          entry._user.id = entry._user._id
+          delete entry._user._id
+        })
+        dispatch(receiveLadder(status, {
+          ladder: data}
+        ))
       }))
   }
 }
@@ -66,10 +76,10 @@ export function addEntryToLadder(user, cb) {
         var newUser = Object.assign({}, user, { _id: data.userId })
         var newEntry = {
           _id: data.entryId,
-          _user: newUser,
+          _user: newUser._id,
           kp: 1000
         };
-        dispatch(addEntry(newEntry))
+        dispatch(addEntry(newEntry, newUser))
       }))
   }
 }
