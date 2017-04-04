@@ -87,12 +87,21 @@ body {
 }
 
 #left-nav li {
-  transition: background-color 1s, width 1s;
+  border-radius: 0px 4px 4px 0px;
+  transition: background-color 0.3s;
+}
+
+#left-nav a {
+  border-radius: 0px 4px 4px 0px;
+}
+
+#left-nav li.active {
+  line-height: 30px;
 }
 
 #left-nav li:not(.active) {
   background-color: #FFF;
-  width: calc(100% - 7px);
+  max-width: calc(100% - 7px);
 }
 
 .modal-form {
@@ -171,7 +180,7 @@ form .btn {
 
 .profile-label {
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .black-nav-item {

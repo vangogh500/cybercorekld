@@ -11,6 +11,7 @@ import AuthHomePage from './AuthHomePage.js'
 import AuthSectionSync from './containers/authSectionSync.js'
 import LadderSection from './components/ladderSection.js'
 import LadderPage from './ladderPage.js'
+import MatchesPage from './matchesPage.js'
 
 import { loginFromStorage } from './actions/authorization.js'
 
@@ -28,6 +29,7 @@ ReactDOM.render((
             <Route path="/auth/home" component={AuthHomePage} />
             <Route path="/auth/onevone" component={LadderSection}>
               <Route path="/auth/onevone/ladder" component={LadderPage} />
+              <Route path="/auth/onevone/matches" component={MatchesPage} />
             </Route>
           </Route>
         </Route>

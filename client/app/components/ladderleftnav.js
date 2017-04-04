@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default class LadderLeftNav extends React.Component {
   constructor(props) {
@@ -9,6 +10,13 @@ export default class LadderLeftNav extends React.Component {
     }
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseExit = this.handleMouseExit.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      location: nextProps.active,
+      active: nextProps.active
+    })
   }
 
   handleMouseEnter(e) {
@@ -40,13 +48,13 @@ export default class LadderLeftNav extends React.Component {
                   <a className="nav-link" data-toggle="tab" role="tab">Ladder</a>
               </li>
               <li className={"nav-item " + (this.state.active == 'matches' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseExit}>
-                  <a className="nav-link" data-toggle="tab" role="tab">Matches</a>
+                <Link to="/auth/onevone/matches" className="nav-link" data-toggle="tab" role="tab">Matches</Link>
               </li>
             </ul>
           ) : (
             <ul className="nav nav-pills nav-stacked" role="tablist">
               <li className={"nav-item " + (this.state.active == 'ladder' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseExit}>
-                  <a className="nav-link" data-toggle="tab" role="tab">Ladder</a>
+                  <Link to="/auth/onevone/ladder" className="nav-link" data-toggle="tab" role="tab">Ladder</Link>
               </li>
               <li className={"nav-item " + (this.state.active == 'matches' ? 'active z-depth-4' : 'z-depth-2')}>
                   <a className="nav-link" data-toggle="tab" role="tab">Matches</a>
