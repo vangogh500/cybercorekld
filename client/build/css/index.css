@@ -200,3 +200,24 @@ form .btn {
 .card-title {
   margin-right: 0px !important;
 }
+
+.autofill {
+  position: absolute;
+  left: 25px;
+  right: 25px;
+}
+
+.autofill-item:not(:first-child) {
+  border-top: 1px solid #D8D8D8;
+}
+
+.autofill-item {
+  user-select: none;
+  padding: 15px;
+  background-color: #FFF;
+}
+
+.autofill-item:hover {
+  color: #FFF;
+  background-color: #980008;
+}

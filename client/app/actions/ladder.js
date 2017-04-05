@@ -47,7 +47,6 @@ export function fetchLadder() {
       }
     })
       .then(response => resolve(response, (status, data) => {
-        console.log(data)
         data.forEach((entry) => {
           entry.id = entry._id
           delete entry._id

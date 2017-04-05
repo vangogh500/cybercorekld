@@ -1,5 +1,8 @@
 import React from 'react'
 
+import ModalButton from './components/modalbutton.js'
+import LadderAddMatchForm from './components/ladderaddmatchform.js'
+
 export default class MatchesPage extends React.Component {
   render() {
     return (
@@ -21,6 +24,11 @@ export default class MatchesPage extends React.Component {
             <div className="panel-body">
             </div>
           </div>
+        </div>
+        <div className="col-xs-2">
+          <ModalButton label="Add Match">
+            <LadderAddMatchForm />
+          </ModalButton>
         </div>
       </div>
     )

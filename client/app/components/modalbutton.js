@@ -1,8 +1,6 @@
 import React from 'react'
 
-import LadderAddUserFormSync from '../containers/ladderadduserformsync.js'
-
-export default class LadderAddUser extends React.Component {
+export default class ModalButton extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -36,10 +34,10 @@ export default class LadderAddUser extends React.Component {
               <div className="modal-dialog" onClick={this.defaultClick}>
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h4>Add User</h4>
+                    <h4>{this.props.label}</h4>
                   </div>
                   <div className="modal-body">
-                    <LadderAddUserFormSync />
+                    {this.props.children}
                   </div>
                 </div>
               </div>
@@ -57,7 +55,7 @@ export default class LadderAddUser extends React.Component {
       <div>
         <button id="add-user" type="button" className="btn btn-danger waves-effect" data-toggle="modal" data-target="ladderAddUserModal" onClick={this.showModal}>
           <span className="glyphicon glyphicon-plus"></span>
-          Add User
+          {this.props.label}
         </button>
         {modal()}
       </div>

@@ -4,11 +4,14 @@ import { fetchLadder } from '../actions/ladder.js'
 import Ladder from '../components/ladder.js'
 
 const mapStateToProps = (state) => {
-  console.log(state.ladder.ladder.map((id) => {
-    state.ladder.ladderEntries[id]
-  }))
+  var ladder = state.ladder.ladder.map((id) => {
+    return state.ladder.ladderEntries[id]
+  })
+  ladder.forEach((entry) => {
+    entry._user = state.ladder.users[entry._user]
+  })
   return {
-    data: state.ladder.data,
+    data: ladder,
     status: state.ladder.status
   }
 }

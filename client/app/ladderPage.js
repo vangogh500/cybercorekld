@@ -1,7 +1,8 @@
 import React from 'react'
 
 import LadderSync from './containers/laddersync.js'
-import LadderAddUser from './components/ladderadduser.js'
+import ModalButton from './components/modalbutton.js'
+import LadderAddUserFormSync from './containers/ladderadduserformsync.js'
 
 export default class LadderPage extends React.Component {
   render() {
@@ -44,7 +45,9 @@ export default class LadderPage extends React.Component {
           <LadderSync />
         </div>
         <div className="col-xs-2">
-          <LadderAddUser />
+          <ModalButton label="Add User">
+            <LadderAddUserFormSync />
+          </ModalButton>
         </div>
       </div>
     )
