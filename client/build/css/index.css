@@ -1,3 +1,10 @@
+@keyframes contractExpand {
+    0%   {width: 70%;}
+    50%  {width: 50%;}
+    100% {width: 70%;}
+}
+
+
 body {
   background-color: #171c25 !important;
   font-family: 'Roboto', sans-serif !important;
@@ -220,4 +227,56 @@ form .btn {
 .autofill-item:hover {
   color: #FFF;
   background-color: #980008;
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 1rem;
+  margin-left: 0;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #C00;
+  color: #FFF;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  color: #292b2c;
+  text-align: inherit;
+  background: 0 0;
+  border: 0;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+button:focus {outline:0;}
+
+.select {
+  height: auto !important;
+  box-shadow: none !important;
+  border-style: solid !important;
+  border-width: 0px 0px 1px 0px !important;
+  background-color: #FFF;
+}
+
+.select:focus {
+  box-shadow: none !important;
+  border-width: 0px 0px 2px 0px !important;
+  border-color: #4285f4 !important;
+}
+
+.spacer {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  animation: contractExpand 4s infinite;
+}
+
+.modal-content {
+  max-height: 70vh;
+  overflow-y: scroll;
 }

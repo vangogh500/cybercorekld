@@ -5,11 +5,10 @@ import Ladder from '../components/ladder.js'
 
 const mapStateToProps = (state) => {
   var ladder = state.ladder.ladder.map((id) => {
-    return state.ladder.ladderEntries[id]
+    var entry = state.ladder.ladderEntries[id]
+    return Object.assign({}, entry,{ _user: state.ladder.users[entry._user] })
   })
-  ladder.forEach((entry) => {
-    entry._user = state.ladder.users[entry._user]
-  })
+
   return {
     data: ladder,
     status: state.ladder.status

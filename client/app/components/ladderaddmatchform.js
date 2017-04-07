@@ -1,6 +1,8 @@
 import React from 'react'
-
 import { validateEmail } from '../util.js'
+
+import FormSelect from './formSelect.js'
+import FormAutoFill from './formAutoFill.js'
 
 export default class LadderAddUserForm extends React.Component {
   constructor(props) {
@@ -10,6 +12,9 @@ export default class LadderAddUserForm extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount() {
   }
 
   handleChange(e) {
@@ -53,38 +58,35 @@ export default class LadderAddUserForm extends React.Component {
       valid = true
     }
 
+    var form = (
+      <form className="modal-form">
+        <FormAutoFill label="Player 1" type="text"/>
+        <div className="form-group">
+          <label>Champion</label>
+          <input type="text" className="form-control" />
+        </div>
+        <hr className="spacer" />
+        <div className="form-group">
+          <label>Player 2</label>
+          <input name="ign" type="text" className="form-control" />
+        </div>
+        <div className="form-group">
+          <label>Champion</label>
+          <input type="text" className="form-control" />
+        </div>
+        <hr className="spacer" />
+        <FormSelect label="Winner" options={["Player 1", "Player 2"]} />
+        <FormSelect label="Win Condition" options={["Creep Score", "First Blood", "First Tower"]}/>
+        <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
+          Submit
+        </button>
+        <div className="clearfix"></div>
+      </form>
+    )
+
     switch(this.state.status) {
       case -1:
-        return (
-          <form className="modal-form">
-            <div className="form-group">
-              <label>Player 1</label>
-              <input name="csm" type="text" className="form-control"/>
-            </div>
-            <div className="form-group">
-              <label>Champion</label>
-              <input type="text" className="form-control" />
-            </div>
-            <hr />
-            <div className="form-group">
-              <label>Player 2</label>
-              <input name="ign" type="text" className="form-control" />
-            </div>
-            <div className="form-group">
-              <label>Champion</label>
-              <input type="text" className="form-control" />
-            </div>
-            <fieldset className="form-group">
-              <label> Winner</label>
-              <input type="checkbox" />
-            </fieldset>
-
-            <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
-              Submit
-            </button>
-            <div className="clearfix"></div>
-          </form>
-        )
+        return form
       case 0:
         return (
           <div className="spinner">
@@ -110,28 +112,7 @@ export default class LadderAddUserForm extends React.Component {
                 <span className="card-text">{this.state.msg}</span>
               </div>
             </div>
-            <form className="modal-form">
-              <div className="form-group">
-                <label>CSM</label>
-                <input name="csm" type="text" className="form-control" onChange={this.handleChange} />
-              </div>
-              <div className="form-group">
-                <label>IGN</label>
-                <input name="ign" type="text" className="form-control" onChange={this.handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Name</label>
-                <input name="name" type="text" className="form-control" onChange={this.handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input name="email" type="text" className="form-control" onChange={this.handleChange} />
-              </div>
-              <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
-                Submit
-              </button>
-              <div className="clearfix"></div>
-            </form>
+            { form }
           </div>
         )
     }
