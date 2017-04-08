@@ -27,7 +27,7 @@ export default class MatchesPage extends React.Component {
         </div>
         <div className="col-xs-2">
           <ModalButton label="Add Match">
-            <LadderAddMatchForm />
+            <LadderAddMatchForm users={Object.keys(this.props.users).map((key) => this.props.users[key])} />
           </ModalButton>
         </div>
       </div>

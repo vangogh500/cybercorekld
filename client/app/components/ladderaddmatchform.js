@@ -53,6 +53,7 @@ export default class LadderAddUserForm extends React.Component {
   }
 
   render() {
+    console.log(this.props.users)
     var valid = false
     if(this.state.csm && this.state.ign && this.state.name && validateEmail(this.state.email)) {
       valid = true
