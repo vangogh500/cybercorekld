@@ -185,6 +185,10 @@ form .btn {
   line-height: 30px;
 }
 
+.line-height-40 {
+  line-height: 40px;
+}
+
 .profile-label {
   font-weight: bold;
   margin-right: 5px;
@@ -209,9 +213,16 @@ form .btn {
 }
 
 .autofill {
-  position: absolute;
-  left: 25px;
-  right: 25px;
+  display: none;
+}
+
+.autofill-container .form-group:hover .autofill {
+  display: block;
+}
+
+.autofill {
+  position: relative;
+  z-index: 100;
 }
 
 .autofill-item:not(:first-child) {
@@ -279,4 +290,14 @@ button:focus {outline:0;}
 .modal-content {
   max-height: 70vh;
   overflow-y: scroll;
+}
+
+.highlight {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.sprite {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
 }

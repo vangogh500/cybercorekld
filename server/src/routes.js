@@ -79,7 +79,7 @@ module.exports = function(app) {
   })
 
   app.post('/api/auth/onevone/match', function(req,res) {
-    OneVOneListing.find({ $or: [{ _user: req.body.player_one._user}, { _user: req.body.player_two._user }]}, function(err, listings) {
+    OneVOneListing.find({ $or: [{ _user: req.body.playerOne._id}, { _user: req.body.playerTwo._id }]}, function(err, listings) {
       if(err) { res.status(500).send() }
       else {
         var kp_one = listings[0].kp
@@ -88,10 +88,10 @@ module.exports = function(app) {
         var d_kp = elo.calculate(kp_one, kp_two, listings[0].matches.length, listings[1].matches.length, ((req.body.winner == 'player_one') ? 0 : 1))
         var newMatch = new LadderMatch({
           ladder_type: '1v1',
-          player_one: req.body.player_one,
-          player_two: req.body.player_two,
+          player_one: req.body.playerOne,
+          player_two: req.body.playerTwo,
           winner: req.body.winner,
-          win_condition: req.body.win_condition,
+          win_condition: req.body.winCondition,
           date: req.body.date,
           d_kp
         })

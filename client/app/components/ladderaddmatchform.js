@@ -8,29 +8,51 @@ export default class LadderAddUserForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      status: -1
+      status: -1,
+      playerOne: {
+        _id: "",
+        champion: ""
+      },
+      playerTwo: {
+        _id: "",
+        champion: ""
+      },
+      winner: "",
+      winCondition: ""
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount() {
-  }
-
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+  handleChange(e, path, value) {
+    if(!path) {
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    }
+    else {
+      var set_deep_value = (obj, path, value) => {
+        for (var i=0, path=path.split('.'), len=path.length; i<len; i++) {
+          if(i<len-1) {
+            obj = obj[path[i]]
+          }
+          else {
+            obj[path[i]] = value
+          }
+        }
+      }
+      var merge = Object.assign({}, this.state)
+      set_deep_value(merge, path, value)
+      this.setState(merge)
+    }
   }
 
   handleClick(e) {
     e.preventDefault()
     this.setState({ status: 0 })
-    var user = Object.assign({}, this.state)
-    delete user.msg
-    delete user.status
-    console.log(user)
-    this.props.onClick(user, (status) => {
+    var match = Object.assign({}, this.state)
+    match.date = Date.now()
+    this.props.onClick(match, (status) => {
       var msg = ''
       switch(status) {
         case 200:
@@ -53,31 +75,21 @@ export default class LadderAddUserForm extends React.Component {
   }
 
   render() {
-    console.log(this.props.users)
     var valid = false
-    if(this.state.csm && this.state.ign && this.state.name && validateEmail(this.state.email)) {
+    if(this.state.playerOne._id && this.state.playerTwo._id && this.state.winner && this.state.winCondition && this.state.playerOne.champion && this.state.playerTwo.champion) {
       valid = true
     }
 
     var form = (
       <form className="modal-form">
-        <FormAutoFill label="Player 1" type="text"/>
-        <div className="form-group">
-          <label>Champion</label>
-          <input type="text" className="form-control" />
-        </div>
+        <FormAutoFill label="Player 1" type="user" data={this.props.users} onChange={this.handleChange} path="playerOne._id" />
+        <FormAutoFill label="Champion" type="champion" data={this.props.champions} onChange={this.handleChange} path="playerOne.champion"/>
         <hr className="spacer" />
-        <div className="form-group">
-          <label>Player 2</label>
-          <input name="ign" type="text" className="form-control" />
-        </div>
-        <div className="form-group">
-          <label>Champion</label>
-          <input type="text" className="form-control" />
-        </div>
+        <FormAutoFill label="Player 2" type="user" data={this.props.users} onChange={this.handleChange} path="playerTwo._id" />
+        <FormAutoFill label="Champion" type="champion" data={this.props.champions} onChange={this.handleChange} path="playerTwo.champion" />
         <hr className="spacer" />
-        <FormSelect label="Winner" options={["Player 1", "Player 2"]} />
-        <FormSelect label="Win Condition" options={["Creep Score", "First Blood", "First Tower"]}/>
+        <FormSelect label="Winner" options={["Player 1", "Player 2"]} onChange={this.handleChange} path="winner" />
+        <FormSelect label="Win Condition" options={["Creep Score", "First Blood", "First Tower"]} onChange={this.handleChange} path="winCondition"/>
         <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
           Submit
         </button>

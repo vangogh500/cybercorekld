@@ -5,7 +5,6 @@ import LadderLeftNav from './ladderleftnav.js'
 export default class LadderSection extends React.Component {
   componentDidMount() {
     this.props.init()
-    console.log(this.props.location.pathname.slice(14))
   }
   render() {
     return (

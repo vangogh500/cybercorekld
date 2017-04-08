@@ -12,6 +12,7 @@ export default class FormSelect extends React.Component {
   handleClick(e) {
     e.preventDefault()
     this.setState({ selected: e.target.name })
+    this.props.onChange(e, this.props.path, e.target.name)
   }
 
   render() {

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import ModalButton from './components/modalbutton.js'
-import LadderAddMatchForm from './components/ladderaddmatchform.js'
+import LadderAddMatchFormSync from './containers/addmatchformsync.js'
 
 export default class MatchesPage extends React.Component {
   render() {
@@ -27,7 +27,7 @@ export default class MatchesPage extends React.Component {
         </div>
         <div className="col-xs-2">
           <ModalButton label="Add Match">
-            <LadderAddMatchForm users={Object.keys(this.props.users).map((key) => this.props.users[key])} />
+            <LadderAddMatchFormSync users={Object.keys(this.props.users).map((key) => this.props.users[key])} champions={Object.keys(this.props.champions).map((key) => this.props.champions[key])} />
           </ModalButton>
         </div>
       </div>

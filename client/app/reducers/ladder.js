@@ -1,11 +1,12 @@
-import { FETCH_LADDER, ADD_ENTRY } from '../actions/ladder.js'
+import { FETCH_LADDER, ADD_ENTRY, FETCH_CHAMPIONS } from '../actions/ladder.js'
 import { normalizeLadderEntries } from '../normalizer.js'
 
 export function ladder(state = {
   status: 0,
   ladder: [],
   ladderEntries: {},
-  users: {}
+  users: {},
+  champions: {}
 }, action) {
   switch(action.type) {
     case FETCH_LADDER:
@@ -22,6 +23,8 @@ export function ladder(state = {
       nextState.ladderEntries[action.entry._id] = action.entry
       nextState.users[action.user._id] = action.user
       return nextState
+    case FETCH_CHAMPIONS:
+      return Object.assign({}, state, { champions: action.data })
     default:
       return state
   }
