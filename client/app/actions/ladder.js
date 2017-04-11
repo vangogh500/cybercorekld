@@ -44,6 +44,14 @@ function addEntry(entry, user) {
     user
   }
 }
+function addMatch(match, d_kp, listingIds) {
+  return {
+    type: ADD_MATCH,
+    match,
+    d_kp,
+    listingIds
+  }
+}
 
 function resolve(response, cb) {
   if(response.status !== 200) { cb(response.status, null) }
@@ -132,6 +140,8 @@ export function addMatchToLadder(match, cb) {
       body: JSON.stringify(match)
     }).then(response => resolve(response, (status, data) => {
         cb(status)
+        var newMatch = Object.assign({}, match, { _id: data.matchId })
+        dispatch(addMatch(newMatch, data.d_kp, data.listingIds))
       }))
   }
 }

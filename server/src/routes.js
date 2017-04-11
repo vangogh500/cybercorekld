@@ -86,16 +86,57 @@ module.exports = function(app) {
         var kp_two = listings[1].kp
 
         var d_kp = elo.calculate(kp_one, kp_two, listings[0].matches.length, listings[1].matches.length, ((req.body.winner == 'player_one') ? 0 : 1))
+
         var newMatch = new LadderMatch({
           ladder_type: '1v1',
-          player_one: req.body.playerOne,
-          player_two: req.body.playerTwo,
-          winner: req.body.winner,
-          win_condition: req.body.winCondition,
+          player_one: {
+            _user: req.body.player_one._user,
+            champion: req.body.player_one.champion
+          },
+          player_two: {
+            _user: req.body.player_two._user,
+            champion: req.body.playerTwo.champion
+          },
+          winner: req.body.winner.value,
+          win_condition: req.body.win_condition.value,
           date: req.body.date,
+          initial_kp: {
+            player_one: kp_one,
+            player_two: kp_two
+          },
           d_kp
         })
-        console.log(newMatch)
+        newMatch.save(function(err) {
+          if(err){
+            console.log(err)
+            res.status(500).send()
+          }
+          else {
+            listings[0].kp = kp_one + d_kp.player_one
+            listings[1].kp = kp_two + d_kp.player_two
+            listings[0].matches.push(newMatch._id)
+            listings[1].matches.push(newMatch._id)
+            listings[0].lastGameDate = newMatch.date
+            listings[1].lastGameDate = newMatch.date
+            listings[0].save(function(error) {
+              if(error){
+                console.log(error)
+                res.status(500).send()
+              }
+              else {
+                listings[1].save(function(e) {
+                  if(e){
+                    console.log(e)
+                    res.status(500).send()
+                  }
+                  else {
+                    res.send({ matchId: newMatch._id, d_kp, listingIds: [listings[0]._id, listings[1]._id] })
+                  }
+                })
+              }
+            })
+          }
+        })
       }
     })
   })

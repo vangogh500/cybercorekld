@@ -212,27 +212,29 @@ form .btn {
   margin-right: 0px !important;
 }
 
-.autofill {
-  display: none;
+.react-autosuggest__suggestions-container {
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19) !important;
 }
 
-.autofill-container .form-group:hover .autofill {
-  display: block;
-}
-
-.autofill {
-  position: relative;
-  z-index: 100;
-}
-
-.autofill-item:not(:first-child) {
+.react-autosuggest__suggestion:not(.react-autosuggest__suggestion--first) {
   border-top: 1px solid #D8D8D8;
 }
 
+.react-autosuggest__input {
+  padding: .5rem 0 .6rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: transparent;
+  background-image: none;
+  border-radius: 0;
+  margin-top: .2rem;
+  margin-bottom: 1rem;
+}
+
 .autofill-item {
-  user-select: none;
   padding: 15px;
   background-color: #FFF;
+  cursor: pointer;
 }
 
 .autofill-item:hover {
@@ -300,4 +302,15 @@ button:focus {outline:0;}
   height: 40px;
   width: 40px;
   border-radius: 50px;
+}
+
+.Select-control {
+  border-width: 0px 0px 1px 0px !important;
+  border-style: solid;
+  border-color: #ccc;
+  line-height: 1.5;
+}
+
+.Select-menu-outer {
+  z-index: 1000 !important;
 }

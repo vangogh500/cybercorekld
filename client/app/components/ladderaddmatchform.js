@@ -1,50 +1,44 @@
 import React from 'react'
-import { validateEmail } from '../util.js'
-
-import FormSelect from './formSelect.js'
-import FormAutoFill from './formAutoFill.js'
+import Select from 'react-select'
+import AutoFillChampion from './AutoFillChampion.js'
+import AutoFillUser from './AutoFillUser.js'
 
 export default class LadderAddUserForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       status: -1,
-      playerOne: {
-        _id: "",
+      msg: "",
+      player_one: {
+        _user: "",
         champion: ""
       },
-      playerTwo: {
-        _id: "",
+      player_two: {
+        _user: "",
         champion: ""
       },
       winner: "",
-      winCondition: ""
+      win_condition: ""
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleChange(e, path, value) {
-    if(!path) {
-      this.setState({
-        [e.target.name]: e.target.value
-      })
-    }
-    else {
-      var set_deep_value = (obj, path, value) => {
-        for (var i=0, path=path.split('.'), len=path.length; i<len; i++) {
-          if(i<len-1) {
-            obj = obj[path[i]]
-          }
-          else {
-            obj[path[i]] = value
-          }
+  handleChange(path, value) {
+    var set_deep_value = (obj, path, value) => {
+      for (var i=0, path=path.split('.'), len=path.length; i<len; i++) {
+        if(i<len-1) {
+          obj = obj[path[i]]
+        }
+        else {
+          obj[path[i]] = value
         }
       }
-      var merge = Object.assign({}, this.state)
-      set_deep_value(merge, path, value)
-      this.setState(merge)
     }
+    var merge = Object.assign({}, this.state)
+    set_deep_value(merge, path, value)
+    console.log(merge)
+    this.setState(merge)
   }
 
   handleClick(e) {
@@ -56,21 +50,17 @@ export default class LadderAddUserForm extends React.Component {
       var msg = ''
       switch(status) {
         case 200:
-          msg = this.state.name + ' has been successfully added!'
+          msg = 'The match has been successfully added!'
           break
         case 401:
           msg = 'Unauthorized'
         default:
           msg = 'Oops something went wrong!'
       }
-      this.setState({
-        csm: '',
-        ign: '',
-        name: '',
-        email: '',
-        status,
-        msg
-      })
+    })
+    this.setState({
+      msg: msg,
+      status
     })
   }
 
@@ -82,14 +72,20 @@ export default class LadderAddUserForm extends React.Component {
 
     var form = (
       <form className="modal-form">
-        <FormAutoFill label="Player 1" type="user" data={this.props.users} onChange={this.handleChange} path="playerOne._id" />
-        <FormAutoFill label="Champion" type="champion" data={this.props.champions} onChange={this.handleChange} path="playerOne.champion"/>
+        <AutoFillUser label="Player 1" path="player_one._user" data={this.props.users} onClick={this.handleChange} />
+        <AutoFillChampion path="player_one.champion" data={this.props.champions} onClick={this.handleChange} />
         <hr className="spacer" />
-        <FormAutoFill label="Player 2" type="user" data={this.props.users} onChange={this.handleChange} path="playerTwo._id" />
-        <FormAutoFill label="Champion" type="champion" data={this.props.champions} onChange={this.handleChange} path="playerTwo.champion" />
+        <AutoFillUser label="Player 2" path="player_two._user" data={this.props.users} onClick={this.handleChange} />
+        <AutoFillChampion path="player_two.champion" data={this.props.champions} onClick={this.handleChange} />
         <hr className="spacer" />
-        <FormSelect label="Winner" options={["Player 1", "Player 2"]} onChange={this.handleChange} path="winner" />
-        <FormSelect label="Win Condition" options={["Creep Score", "First Blood", "First Tower"]} onChange={this.handleChange} path="winCondition"/>
+        <div className="form-group">
+          <label>Winner</label>
+          <Select name="Winner" value={this.state.winner} onChange={(value) => this.handleChange('winner', value)} options={[{value: 'player_one', label: 'Player 1'}, {value: 'player_two', label: 'Player 2'}]} />
+        </div>
+        <div className="form-group">
+          <label>Win Condition</label>
+          <Select name="Win Condition" value={this.state.winCondition} onChange={(value) => this.handleChange('win_condition', value)} options={[{value: 'cs', label: 'Creep Score'}, {value: 'fb', label: 'First Blood'}, {value: 'ft', label: 'First Tower'}]} />
+        </div>
         <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
           Submit
         </button>
