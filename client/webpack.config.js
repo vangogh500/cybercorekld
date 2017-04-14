@@ -37,7 +37,7 @@ module.exports = {
           // es2015 == ECMAScript 2015. Lets you use new JavaScript features.
           // The React module runs the React compiler, which translates the
           // HTML in your React modules into code.
-          presets: ['es2015', 'react']
+          presets: ['es2015', 'react', 'stage-2']
         }
       }
     ]

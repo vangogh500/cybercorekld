@@ -65,7 +65,7 @@ module.exports = function(app) {
   })
 
   app.get('/api/auth/onevone/ladder', verifyToken, function(req,res) {
-    OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').exec(function(err, ladder) {
+    OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').populate('matches').exec(function(err, ladder) {
       if(err) {
         res.status(500).send()
       }
@@ -78,8 +78,23 @@ module.exports = function(app) {
     })
   })
 
+  app.get('/api/onevone/matches', function(req,res) {
+    LadderMatch.find({}).sort({ date: -1 }).exec(function(err, matches) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(matches) {
+        res.send(matches)
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
+
   app.post('/api/auth/onevone/match', function(req,res) {
-    OneVOneListing.find({ $or: [{ _user: req.body.playerOne._id}, { _user: req.body.playerTwo._id }]}, function(err, listings) {
+    console.log(req.body)
+    OneVOneListing.find({ $or: [{ _user: req.body.player_one._user}, { _user: req.body.player_two._user }]}, function(err, listings) {
       if(err) { res.status(500).send() }
       else {
         var kp_one = listings[0].kp
@@ -95,7 +110,7 @@ module.exports = function(app) {
           },
           player_two: {
             _user: req.body.player_two._user,
-            champion: req.body.playerTwo.champion
+            champion: req.body.player_two.champion
           },
           winner: req.body.winner.value,
           win_condition: req.body.win_condition.value,

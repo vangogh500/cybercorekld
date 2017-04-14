@@ -2,6 +2,7 @@ import React from 'react'
 
 import ModalButton from './components/modalbutton.js'
 import LadderAddMatchFormSync from './containers/addmatchformsync.js'
+import MatchesSync from './containers/matchesSync.js'
 
 export default class MatchesPage extends React.Component {
   render() {
@@ -24,6 +25,7 @@ export default class MatchesPage extends React.Component {
             <div className="panel-body">
             </div>
           </div>
+          <MatchesSync />
         </div>
         <div className="col-xs-2">
           <ModalButton label="Add Match">

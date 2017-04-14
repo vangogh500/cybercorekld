@@ -13,7 +13,7 @@ var matchSchema = mongoose.Schema({
   },
   winner: { type: String, enum: ['player_one', 'player_two'] },
   win_condition: { type: String, enum: ['cs', 'fb', 'ft'] },
-  date: { type: Date, default: Date.now },
+  date: { type: Date, default: Date.now, index: true },
   initial_kp: {
     player_one: Number,
     player_two: Number

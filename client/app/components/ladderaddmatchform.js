@@ -45,6 +45,8 @@ export default class LadderAddUserForm extends React.Component {
     e.preventDefault()
     this.setState({ status: 0 })
     var match = Object.assign({}, this.state)
+    delete match.msg
+    delete match.status
     match.date = Date.now()
     this.props.onClick(match, (status) => {
       var msg = ''
@@ -57,16 +59,16 @@ export default class LadderAddUserForm extends React.Component {
         default:
           msg = 'Oops something went wrong!'
       }
-    })
-    this.setState({
-      msg: msg,
-      status
+      this.setState({
+        msg: msg,
+        status
+      })
     })
   }
 
   render() {
     var valid = false
-    if(this.state.playerOne._id && this.state.playerTwo._id && this.state.winner && this.state.winCondition && this.state.playerOne.champion && this.state.playerTwo.champion) {
+    if(this.state.player_one._user && this.state.player_two._user && this.state.winner && this.state.win_condition && this.state.player_one.champion && this.state.player_two.champion) {
       valid = true
     }
 
@@ -84,7 +86,7 @@ export default class LadderAddUserForm extends React.Component {
         </div>
         <div className="form-group">
           <label>Win Condition</label>
-          <Select name="Win Condition" value={this.state.winCondition} onChange={(value) => this.handleChange('win_condition', value)} options={[{value: 'cs', label: 'Creep Score'}, {value: 'fb', label: 'First Blood'}, {value: 'ft', label: 'First Tower'}]} />
+          <Select name="Win Condition" value={this.state.win_condition} onChange={(value) => this.handleChange('win_condition', value)} options={[{value: 'cs', label: 'Creep Score'}, {value: 'fb', label: 'First Blood'}, {value: 'ft', label: 'First Tower'}]} />
         </div>
         <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
           Submit
@@ -112,12 +114,24 @@ export default class LadderAddUserForm extends React.Component {
             </div>
           </div>
         )
-      default:
+      case 200:
         return (
           <div>
             <div className="card success-color">
               <div className="card-block">
-                <span className="card-title">{this.state.status}</span>
+                <span className="card-title">{this.state.status + " "}</span>
+                <span className="card-text">{this.state.msg}</span>
+              </div>
+            </div>
+            { form }
+          </div>
+        )
+      default:
+        return (
+          <div>
+            <div className="card danger-color">
+              <div className="card-block">
+                <span className="card-title">{this.state.status + " "}</span>
                 <span className="card-text">{this.state.msg}</span>
               </div>
             </div>

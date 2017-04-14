@@ -35,7 +35,10 @@ export default class LadderListing extends React.Component {
                 <div className="modal-content">
                   <div className="modal-header">
                     <img className="ladder-icon pull-left" src="http://ddragon.leagueoflegends.com/cdn/7.5.1/img/profileicon/23.png" />
-                    <h4 className="line-height-30">{this.props.name}</h4>
+                    <h4 className="line-height-30 pull-left">{this.props.name}</h4>
+                    <button type="button" className="btn btn-danger waves-effect pull-right">
+                      <span className="fa fa-pencil"></span>
+                    </button>
                   </div>
                   <div className="modal-body">
                     <div className="container">

@@ -1,4 +1,4 @@
-import { FETCH_LADDER, ADD_ENTRY, FETCH_CHAMPIONS, ADD_MATCH } from '../actions/ladder.js'
+import { FETCH_LADDER, ADD_ENTRY, FETCH_CHAMPIONS, FETCH_MATCHES, ADD_MATCH } from '../actions/ladder.js'
 import { normalizeLadderEntries } from '../normalizer.js'
 
 export function ladder(state = {
@@ -18,25 +18,60 @@ export function ladder(state = {
       if(action.status === 200) {
         var normalized = normalizeLadderEntries(action.data)
         nextState = Object.assign(nextState, normalized.entities, normalized.result)
+        var ladderMatches = Object.keys(nextState.matches).map((key) => { return key })
+        ladderMatches.sort((a,b) => {
+          a = new Date(nextState.matches[a].date)
+          b = new Date(nextState.matches[b].date)
+          return (a > b) ? -1 : (a < b) ? 1 : 0
+        })
+        nextState.ladderMatches = ladderMatches
       }
       return nextState
     case ADD_ENTRY:
-      var nextState = Object.assign({}, state)
-      nextState.ladderEntries[action.entry._id] = action.entry
-      nextState.users[action.user._id] = action.user
-      nextState.ladder.push(action.entry_id)
-      return nextState
+      var newState = {
+        ...state,
+        ladderEntries: {
+          ...state.ladderEntries,
+          [action.entry.id]: action.entry
+        },
+        users: {
+          ...state.users,
+          [action.user.id]: action.user
+        },
+        ladder: [...state.ladder, action.entry.id].sort((a,b) => {
+          if(b === action.entry.id) b = action.entry
+          else b = state.ladderEntries[b].kp
+          if(a === action.entry.id) a = action.entry
+          else a = state.ladderEntries[a].kp
+          return b - a
+        })
+      }
+      console.log(newState)
+      return newState
     case ADD_MATCH:
-      var nextState = Object.assign({}, state)
-      nextState.matches[action.match._id] = action.match
-      var entry_one = nextState.ladderEntries[action.listingIds[0]]
-      var entry_two = nextState.ladderEntries[action.listingIds[1]]
-      entry_one.kp = entry_one.kp + action.d_kp.player_one
-      entry_two.kp = entry_two.kp + action.d_kp.player_two
-      entry_one.matches.push(action.match._id)
-      entry_two.matches.push(action.match_id)
-      nextState.ladderMatches.push(action.match_id)
-      return nextState
+      console.log(action)
+      var newState = {
+        ...state,
+        matches: {
+          ...state.matches,
+          [action.match.id]: action.match
+        },
+        ladderEntries: {
+          ...state.ladderEntries,
+          [action.listingIds[0]]: {
+            ...state.ladderEntries[action.listingIds[0]],
+            kp: state.ladderEntries[action.listingIds[0]].kp + action.d_kp.player_one,
+            matches: [ ...state.ladderEntries[action.listingIds[0]].matches, action.match.id]
+          },
+          [action.listingIds[1]]: {
+            ...state.ladderEntries[action.listingIds[1]],
+            kp: state.ladderEntries[action.listingIds[1]].kp + action.d_kp.player_two,
+            matches: [ ...state.ladderEntries[action.listingIds[1]].matches, action.match.id]
+          }
+        },
+        ladderMatches: [ action.match.id, ...state.ladderMatches ]
+      }
+      return newState
     case FETCH_CHAMPIONS:
       return Object.assign({}, state, { champions: action.data })
     default:

@@ -1,7 +1,15 @@
 import React from 'react'
-import LadderListing from './ladderlisting.js'
 
-export default class Ladder extends React.Component {
+import MatchListing from './matchListing.js'
+
+export default class Matches extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    if(this.props !== nextProps) {
+      console.log("test")
+      this.render()
+    }
+  }
   render() {
     switch(this.props.status) {
       case 0:
@@ -22,21 +30,13 @@ export default class Ladder extends React.Component {
         )
       case 200:
         return (
-          <ul id="ladder" className="list list-group">
-            {
-              this.props.data.map((listing, idx) => {
-                return (
-                  <LadderListing
-                    key={listing.id}
-                    index={idx + 1}
-                    summonerName={listing._user.ign}
-                    name={listing._user.name}
-                    csm={listing._user.csm}
-                    email={listing._user.email}
-                    kp={listing.kp}  />
-                )
-              })
-            }
+          <ul id="matches" className="list list-group">
+            {this.props.ladderMatches.map((matchId) => {
+              var match = this.props.matches[matchId]
+              return (
+                <MatchListing match={match} users={this.props.users} champions={this.props.champions} />
+              )
+            })}
           </ul>
         )
       default:
@@ -44,6 +44,5 @@ export default class Ladder extends React.Component {
           <div></div>
         )
     }
-
   }
 }

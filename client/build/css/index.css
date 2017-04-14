@@ -41,7 +41,7 @@ body {
   margin-right: 10px;
 }
 
-#ladder li {
+.list li {
   border-color: #111;
   background-color: #000;
   color: #D8D8D8;
@@ -50,7 +50,7 @@ body {
   transition: background-color 0.3s;
 }
 
-#ladder li:hover {
+.list li:hover {
   background-color: #111;
 }
 
@@ -289,7 +289,7 @@ button:focus {outline:0;}
   animation: contractExpand 4s infinite;
 }
 
-.modal-content {
+.modal-form {
   max-height: 70vh;
   overflow-y: scroll;
 }
@@ -313,4 +313,12 @@ button:focus {outline:0;}
 
 .Select-menu-outer {
   z-index: 1000 !important;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.display-inline {
+  display: inline;
 }

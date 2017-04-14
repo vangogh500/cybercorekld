@@ -5,6 +5,7 @@ export const STATUS_REQUEST = 0
 export const ADD_ENTRY = 'ADD_ENTRY'
 
 export const FETCH_CHAMPIONS = 'FETCH_CHAMPIONS'
+export const FETCH_MATCHES = 'FETCH_MATCH'
 export const ADD_MATCH = 'ADD_MATCH'
 
 function requestLadder() {
@@ -21,9 +22,23 @@ function requestChampions() {
   }
 }
 
+function requestMatches() {
+  return {
+    type: FETCH_MATCHES,
+    status: STATUS_REQUEST
+  }
+}
+
 function receiveLadder(status, data) {
   return {
     type: FETCH_LADDER,
+    status,
+    data
+  }
+}
+function receiveMatches(status, data) {
+  return {
+    type: FETCH_MATCHES,
     status,
     data
   }
@@ -78,6 +93,10 @@ export function fetchLadder() {
           delete entry._id
           entry._user.id = entry._user._id
           delete entry._user._id
+          entry.matches.forEach((match) => {
+            match.id = match._id
+            delete match._id
+          })
         })
         dispatch(receiveLadder(status, {
           ladder: data}
@@ -105,6 +124,21 @@ export function fetchChampions() {
   }
 }
 
+export function fetchMatches() {
+  return function(dispatch, getState) {
+    dispatch(requestMatches())
+
+    return fetch('http://localhost:3000/api/onevone/matches', {
+      method: 'GET'
+    })
+      .then(response => resolve(response, (status, data) => {
+        dispatch(receiveMatches(status, {
+          ladderMatches: data
+        }))
+      }))
+  }
+}
+
 export function addEntryToLadder(user, cb) {
   return function(dispatch, getState) {
     return fetch('http://localhost:3000/api/auth/onevone/user', {
@@ -119,7 +153,7 @@ export function addEntryToLadder(user, cb) {
         cb(status)
         var newUser = Object.assign({}, user, { _id: data.userId })
         var newEntry = {
-          _id: data.entryId,
+          id: data.entryId,
           _user: newUser._id,
           kp: 1000
         };
@@ -140,8 +174,10 @@ export function addMatchToLadder(match, cb) {
       body: JSON.stringify(match)
     }).then(response => resolve(response, (status, data) => {
         cb(status)
-        var newMatch = Object.assign({}, match, { _id: data.matchId })
-        dispatch(addMatch(newMatch, data.d_kp, data.listingIds))
+        if(status === 200) {
+          var newMatch = Object.assign({}, match, { id: data.matchId })
+          dispatch(addMatch(newMatch, data.d_kp, data.listingIds))
+        }
       }))
   }
 }

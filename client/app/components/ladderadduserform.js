@@ -29,7 +29,6 @@ export default class LadderAddUserForm extends React.Component {
     var user = Object.assign({}, this.state)
     delete user.msg
     delete user.status
-    console.log(user)
     this.props.onClick(user, (status) => {
       var msg = ''
       switch(status) {
