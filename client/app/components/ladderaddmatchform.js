@@ -37,7 +37,6 @@ export default class LadderAddUserForm extends React.Component {
     }
     var merge = Object.assign({}, this.state)
     set_deep_value(merge, path, value)
-    console.log(merge)
     this.setState(merge)
   }
 

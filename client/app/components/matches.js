@@ -3,13 +3,6 @@ import React from 'react'
 import MatchListing from './matchListing.js'
 
 export default class Matches extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-    if(this.props !== nextProps) {
-      console.log("test")
-      this.render()
-    }
-  }
   render() {
     switch(this.props.status) {
       case 0:
@@ -34,7 +27,7 @@ export default class Matches extends React.Component {
             {this.props.ladderMatches.map((matchId) => {
               var match = this.props.matches[matchId]
               return (
-                <MatchListing match={match} users={this.props.users} champions={this.props.champions} />
+                <MatchListing key={matchId} match={match} users={this.props.users} champions={this.props.champions} />
               )
             })}
           </ul>

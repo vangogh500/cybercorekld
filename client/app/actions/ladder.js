@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
+import { normalizeLadderEntries } from '../normalizer.js'
+
 export const FETCH_LADDER = 'FETCH_LADDER'
 export const STATUS_REQUEST = 0
 export const ADD_ENTRY = 'ADD_ENTRY'
@@ -105,9 +107,7 @@ export function fetchLadder() {
             delete match._id
           })
         })
-        dispatch(receiveLadder(status, {
-          ladder: data}
-        ))
+        dispatch(receiveLadder(status, normalizeLadderEntries({ladder: data})))
       }))
   }
 }
@@ -158,11 +158,12 @@ export function addEntryToLadder(user, cb) {
       body: JSON.stringify({ user: user })
     }).then(response => resolve(response, (status, data) => {
         cb(status)
-        var newUser = Object.assign({}, user, { _id: data.userId })
+        var newUser = Object.assign({}, user, { id: data.userId })
         var newEntry = {
           id: data.entryId,
-          _user: newUser._id,
-          kp: 1000
+          _user: newUser.id,
+          kp: 1000,
+          matches: []
         };
         dispatch(addEntry(newEntry, newUser))
       }))

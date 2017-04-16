@@ -45,8 +45,8 @@ export default class ModalButton extends React.Component {
       }
     }
     return (
-      <div className={this.props.className}>
-        <button id={this.props.id} type="button" className="btn btn-danger waves-effect" data-toggle="modal" data-target="ladderAddUserModal" onClick={this.showModal}>
+      <div>
+        <button id={this.props.id} type="button" className={"btn btn-danger waves-effect " + this.props.className} data-toggle="modal" data-target="ladderAddUserModal" onClick={this.showModal}>
           {this.props.label}
         </button>
         {modal()}

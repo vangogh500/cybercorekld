@@ -55,17 +55,17 @@ export default class UserPage extends React.Component {
       var left = (
         <div>
           <p className="text-white"><b>CSM:</b></p>
-          <p>{this.state.edit ? <input className="text-black" name="csm" value={this.state.csm} onChange={this.handleChange}/> : this.props.ladderEntry._user.csm}</p>
+          <p>{this.state.edit ? <input className="text-black width-100" name="csm" value={this.state.csm} onChange={this.handleChange}/> : this.props.ladderEntry._user.csm}</p>
           <p className="text-white"><b>IGN:</b></p>
-          <p>{this.state.edit ? <input className="text-black" name="ign" value={this.state.ign} onChange={this.handleChange}/> : this.props.ladderEntry._user.ign}</p>
+          <p>{this.state.edit ? <input className="text-black width-100" name="ign" value={this.state.ign} onChange={this.handleChange}/> : this.props.ladderEntry._user.ign}</p>
           <p className="text-white"><b>Email:</b></p>
-          <p>{this.state.edit ? <input className="text-black" name="email" value={this.state.email} onChange={this.handleChange}/> : this.props.ladderEntry._user.email}</p>
+          <p>{this.state.edit ? <input className="text-black width-100" name="email" value={this.state.email} onChange={this.handleChange}/> : this.props.ladderEntry._user.email}</p>
         </div>
       )
       var bottomLeft = this.state.edit ? (
         <div id="user-bottom-left" className="panel panel-default">
           <div className="panel-body">
-            <ModalButton label={(<span className="fa fa-trash-o"></span>)} className="pull-left">
+            <ModalButton label={(<span className="fa fa-trash-o"></span>)} className="width-auto">
               <div className="modal-content">
                 <div className="modal-header">
                   <h4>Are you sure you want to delete this user?</h4>
@@ -75,7 +75,7 @@ export default class UserPage extends React.Component {
                 </div>
               </div>
             </ModalButton>
-            <button type="button" className="btn waves-effect pull-right btn-danger">Save</button>
+            <button type="button" className="btn waves-effect btn-danger width-auto"><span className="fa fa-floppy-o"></span></button>
           </div>
         </div>
       ) : <div></div>
