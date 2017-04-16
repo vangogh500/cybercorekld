@@ -7,6 +7,7 @@ export const ADD_ENTRY = 'ADD_ENTRY'
 export const FETCH_CHAMPIONS = 'FETCH_CHAMPIONS'
 export const FETCH_MATCHES = 'FETCH_MATCH'
 export const ADD_MATCH = 'ADD_MATCH'
+export const REMOVE_LISTING_AND_USER = 'REMOVE_LISTING_AND_USER'
 
 function requestLadder() {
   return {
@@ -59,12 +60,18 @@ function addEntry(entry, user) {
     user
   }
 }
-function addMatch(match, d_kp, listingIds) {
+function addMatch(match, listingIds) {
   return {
     type: ADD_MATCH,
     match,
-    d_kp,
     listingIds
+  }
+}
+
+function removeListingAndUser(listingId) {
+  return {
+    type: REMOVE_LISTING_AND_USER,
+    listingId
   }
 }
 
@@ -175,9 +182,29 @@ export function addMatchToLadder(match, cb) {
     }).then(response => resolve(response, (status, data) => {
         cb(status)
         if(status === 200) {
-          var newMatch = Object.assign({}, match, { id: data.matchId })
-          dispatch(addMatch(newMatch, data.d_kp, data.listingIds))
+          var newMatch = Object.assign({}, match, { id: data.matchId, d_kp: data.d_kp })
+          newMatch.winner = newMatch.winner.value
+          dispatch(addMatch(newMatch, data.listingIds))
         }
       }))
+  }
+}
+
+export function removeListingAndUserFromLadder(password, listingId, cb) {
+  return function(dispatch, getState) {
+    return fetch('http://localhost:3000/api/auth/onevone/user', {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getState().authorization.token
+      },
+      body: JSON.stringify({ listingId, password })
+    }).then(response => {
+      cb(response.status)
+      if(response.status === 200) {
+        dispatch(removeListingAndUser(listingId))
+      }
+    })
   }
 }

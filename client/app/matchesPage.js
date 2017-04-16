@@ -28,8 +28,17 @@ export default class MatchesPage extends React.Component {
           <MatchesSync />
         </div>
         <div className="col-xs-2">
-          <ModalButton label="Add Match">
-            <LadderAddMatchFormSync users={Object.keys(this.props.users).map((key) => this.props.users[key])} champions={Object.keys(this.props.champions).map((key) => this.props.champions[key])} />
+          <ModalButton label={(<span>
+              <span className="glyphicon glyphicon-plus"></span>Add Match
+            </span>)} id="add-user">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4>Add Match</h4>
+              </div>
+              <div className="modal-body">
+                <LadderAddMatchFormSync users={Object.keys(this.props.users).map((key) => this.props.users[key])} champions={Object.keys(this.props.champions).map((key) => this.props.champions[key])} />
+              </div>
+            </div>
           </ModalButton>
         </div>
       </div>

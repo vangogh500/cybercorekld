@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import LadderSection from '../components/ladderSection.js'
+import LadderApp from '../components/ladderApp.js'
 import { fetchLadder, fetchChampions } from '../actions/ladder.js'
 
 const mapStateToProps = (state) => {
@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch) => {
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LadderSection)
+export default connect(mapStateToProps, mapDispatchToProps)(LadderApp)

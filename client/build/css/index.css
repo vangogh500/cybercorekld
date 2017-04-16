@@ -54,6 +54,29 @@ body {
   background-color: #111;
 }
 
+#user-title .panel-heading {
+  background-color: #980008;
+  color: #E8E8E8;
+  border: none;
+}
+
+#user-left .panel-body {
+  background-color: #000;
+}
+
+#user-bottom-left .panel-body {
+  background-color: #000;
+}
+
+#user-body .panel-heading {
+  background-color: #000;
+  border-color: #111;
+}
+
+#user-body .panel-body {
+  background-color: #000;
+}
+
 #ladder-title .panel-heading {
   background-color: #980008;
   color: #E8E8E8;
@@ -206,6 +229,10 @@ form .btn {
 
 .text-white {
   color: #FFF;
+}
+
+.text-black {
+  color: #000;
 }
 
 .card-title {

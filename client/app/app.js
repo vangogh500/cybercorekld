@@ -9,9 +9,11 @@ import NavbarSync from './containers/navbarsync.js'
 import AuthPage from './authPage.js'
 import AuthHomePage from './AuthHomePage.js'
 import AuthSectionSync from './containers/authSectionSync.js'
-import LadderSectionSync from './containers/ladderSectionSync.js'
+import LadderSection from './components/ladderSection.js'
 import LadderPage from './ladderPage.js'
 import MatchesPageSync from './containers/matchesPageSync.js'
+import UserPageSync from './containers/userPageSync.js'
+import LadderAppSync from './containers/ladderAppSync.js'
 
 import { loginFromStorage } from './actions/authorization.js'
 
@@ -27,9 +29,12 @@ ReactDOM.render((
           <Route path="/auth" component={AuthSectionSync}>
             <IndexRoute component={AuthPage} />
             <Route path="/auth/home" component={AuthHomePage} />
-            <Route path="/auth/onevone" component={LadderSectionSync}>
-              <Route path="/auth/onevone/matches" component={MatchesPageSync} />
-              <Route path="/auth/onevone/ladder" component={LadderPage} />
+            <Route path="/auth/onevone" component={LadderAppSync}>
+              <Route component={LadderSection}>
+                <Route path="/auth/onevone/matches" component={MatchesPageSync} />
+                <Route path="/auth/onevone/ladder" component={LadderPage} />
+              </Route>
+              <Route path="/auth/onevone/user/:userId" component={UserPageSync} />
             </Route>
           </Route>
         </Route>

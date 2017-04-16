@@ -27,6 +27,7 @@ export default class Ladder extends React.Component {
               this.props.data.map((listing, idx) => {
                 return (
                   <LadderListing
+                    id={listing.id}
                     key={listing.id}
                     index={idx + 1}
                     summonerName={listing._user.ign}

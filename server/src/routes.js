@@ -64,6 +64,34 @@ module.exports = function(app) {
     })
   })
 
+  app.delete('/api/auth/onevone/user', verifyToken, function(req,res) {
+    if(req.body.password === credentials.credentials.password) {
+      OneVOneListing.findOne({ _id: req.body.listingId }, function(err, listing) {
+        if(err) res.status(500).send()
+        else if(listing) {
+          if(listing.matches.length === 0) {
+            User.findByIdAndRemove(listing._user, function(err) {
+              if(err) res.status(500).send()
+              else {
+                listing.remove(function(err) {
+                  if(err) res.status(500).send()
+                  else res.send()
+                })
+              }
+            })
+          }
+          else {
+            res.status(412).send()
+          }
+        }
+        else {
+          res.status(404).send()
+        }
+      })
+    }
+    else res.status(401).send()
+  })
+
   app.get('/api/auth/onevone/ladder', verifyToken, function(req,res) {
     OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').populate('matches').exec(function(err, ladder) {
       if(err) {
@@ -100,7 +128,7 @@ module.exports = function(app) {
         var kp_one = listings[0].kp
         var kp_two = listings[1].kp
 
-        var d_kp = elo.calculate(kp_one, kp_two, listings[0].matches.length, listings[1].matches.length, ((req.body.winner == 'player_one') ? 0 : 1))
+        var d_kp = elo.calculate(kp_one, kp_two, listings[0].matches.length, listings[1].matches.length, ((req.body.winner.value === 'player_one') ? 0 : 1))
 
         var newMatch = new LadderMatch({
           ladder_type: '1v1',

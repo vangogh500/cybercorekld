@@ -32,14 +32,7 @@ export default class ModalButton extends React.Component {
           <div className="modal-backdrop" onClick={this.closeModal}>
             <div className="modal show" id="ladderAddUserModal" role="dialog">
               <div className="modal-dialog" onClick={this.defaultClick}>
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h4>{this.props.label}</h4>
-                  </div>
-                  <div className="modal-body">
-                    {this.props.children}
-                  </div>
-                </div>
+                {this.props.children}
               </div>
             </div>
           </div>
@@ -52,9 +45,8 @@ export default class ModalButton extends React.Component {
       }
     }
     return (
-      <div>
-        <button id="add-user" type="button" className="btn btn-danger waves-effect" data-toggle="modal" data-target="ladderAddUserModal" onClick={this.showModal}>
-          <span className="glyphicon glyphicon-plus"></span>
+      <div className={this.props.className}>
+        <button id={this.props.id} type="button" className="btn btn-danger waves-effect" data-toggle="modal" data-target="ladderAddUserModal" onClick={this.showModal}>
           {this.props.label}
         </button>
         {modal()}

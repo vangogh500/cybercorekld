@@ -56,6 +56,7 @@ export default class LadderAddUserForm extends React.Component {
           break
         case 401:
           msg = 'Unauthorized'
+          break
         default:
           msg = 'Oops something went wrong!'
       }

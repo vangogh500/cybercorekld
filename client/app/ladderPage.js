@@ -45,8 +45,17 @@ export default class LadderPage extends React.Component {
           <LadderSync />
         </div>
         <div className="col-xs-2">
-          <ModalButton label="Add User">
-            <LadderAddUserFormSync />
+          <ModalButton label={(<span>
+              <span className="glyphicon glyphicon-plus"></span>Add User
+            </span>)} id="add-user">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4>Add User</h4>
+              </div>
+              <div className="modal-body">
+                <LadderAddUserFormSync />
+              </div>
+            </div>
           </ModalButton>
         </div>
       </div>
