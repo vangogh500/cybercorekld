@@ -17,10 +17,12 @@ export default class AuthHomePage extends React.Component {
           </div>
           <div className="col-xs-4">
             <a className="card">
-              <div className="card-block text-center black-nav-item hoverable">
-                <h4 className="card-title">Tournaments</h4>
-                <h2><i className="fa fa-trophy" aria-hidden="true"></i></h2>
-              </div>
+              <Link className="card" to='/auth/tournaments'>
+                <div className="card-block text-center black-nav-item hoverable">
+                  <h4 className="card-title">Tournaments</h4>
+                  <h2><i className="fa fa-trophy" aria-hidden="true"></i></h2>
+                </div>
+              </Link>
             </a>
           </div>
           <div className="col-xs-4">

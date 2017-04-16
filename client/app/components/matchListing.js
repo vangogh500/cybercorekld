@@ -93,6 +93,9 @@ export default class MatchListing extends React.Component {
               <div className="inline-block">
                 {status(RIGHT, (this.props.match.winner === "player_two"), this.props.match.d_kp.player_two)}
               </div>
+              <div className="inline-block pull-right">
+                <a className="text-white"><h4 className="line-height-30"><i className="fa fa-times"></i></h4></a>
+              </div>
             </div>
           </div>
         </a>

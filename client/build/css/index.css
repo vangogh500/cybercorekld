@@ -4,10 +4,11 @@
     100% {width: 70%;}
 }
 
-body {
+body.overflow-x-hidden {
   background-color: #171c25 !important;
   font-family: 'Roboto', sans-serif !important;
   font-size: 15px !important;
+  overflow-x: hidden !important;
 }
 
 #main-nav {
@@ -48,7 +49,7 @@ body {
 .list .list-group-item {
   padding: 20px 15px;
   border-color: #111;
-  border: 0px 0px 1px 0px #111;
+  border-width: 0px 0px 1px 0px;
   background-color: #000;
   color: #D8D8D8;
   line-height: 50px;
@@ -86,6 +87,12 @@ body {
 
 #user-body .panel-body {
   background-color: #000;
+}
+
+.dark-red .panel-heading {
+  background-color: #980008 !important;
+  border: none;
+  color: #E8E8E8 !important;
 }
 
 #ladder-title .panel-heading {
@@ -238,6 +245,14 @@ form .btn {
   background-color: #111;
 }
 
+a.text-white {
+  color: #FFF;
+}
+
+a.text-white:hover {
+  color: #D7353D;
+}
+
 .text-white {
   color: #FFF;
 }
@@ -350,7 +365,7 @@ button:focus {outline:0;}
 
 .modal-form {
   max-height: 70vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .highlight {

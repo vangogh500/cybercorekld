@@ -3,7 +3,6 @@ import LadderListing from './ladderlisting.js'
 
 export default class Ladder extends React.Component {
   render() {
-    console.log(this.props.data)
     switch(this.props.status) {
       case 0:
         return (

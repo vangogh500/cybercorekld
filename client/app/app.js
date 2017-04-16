@@ -14,6 +14,7 @@ import LadderPage from './ladderPage.js'
 import MatchesPageSync from './containers/matchesPageSync.js'
 import UserPageSync from './containers/userPageSync.js'
 import LadderAppSync from './containers/ladderAppSync.js'
+import TournamentPage from './tournamentPage.js'
 
 import { loginFromStorage } from './actions/authorization.js'
 
@@ -36,6 +37,7 @@ ReactDOM.render((
               </Route>
               <Route path="/auth/onevone/user/:userId" component={UserPageSync} />
             </Route>
+            <Route path="/auth/tournaments" component={TournamentPage} />
           </Route>
         </Route>
       </Router>
