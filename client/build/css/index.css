@@ -408,5 +408,9 @@ button:focus {outline:0;}
 }
 
 .margin-right-10 {
-  margin-right: 10px;
+  margin-right: 10px !important;
+}
+
+.react-datepicker__input-container {
+  display: block !important;
 }

@@ -34,19 +34,6 @@ function ladderEntries(state = {}, action) {
         [action.entry.id]: action.entry
       }
     case ADD_MATCH:
-      console.log({
-        ...state,
-        [action.listingIds[0]]: {
-          ...state[action.listingIds[0]],
-          kp: state[action.listingIds[0]].kp + action.match.d_kp.player_one,
-          matches: [ ...state[action.listingIds[0]].matches, action.match.id]
-        },
-        [action.listingIds[1]]: {
-          ...state[action.listingIds[1]],
-          kp: state[action.listingIds[1]].kp + action.match.d_kp.player_two,
-          matches: [ ...state[action.listingIds[1]].matches, action.match.id]
-        }
-      })
       return {
         ...state,
         [action.listingIds[0]]: {
@@ -142,7 +129,7 @@ function champions(state = {}, action) {
   }
 }
 
-function status(state = 0, action) {
+function status(state = -1, action) {
   switch(action.type) {
     case FETCH_LADDER:
       return action.status

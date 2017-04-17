@@ -4,6 +4,8 @@ var jwt = require('jsonwebtoken')
 var OneVOneListing = require('./models/onevoneladder.js')
 var User = require('./models/user.js')
 var LadderMatch = require('./models/laddermatch.js')
+var Team = require('./models/team.js')
+var Tournament = require('./models/tournament.js')
 
 var elo = require('./lib/elo.js')
 
@@ -120,8 +122,40 @@ module.exports = function(app) {
     })
   })
 
-  app.post('/api/auth/onevone/match', function(req,res) {
-    console.log(req.body)
+  app.get('/api/auth/tournaments', function(req,res) {
+    console.log("test")
+    Tournament.find({}).sort({ date: -1 }).populate('teams').exec(function(err, tournaments) {
+      if(err) {
+        res.status(500)
+      }
+      else if(tournaments) {
+        console.log(tournaments)
+        res.send(tournaments)
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
+
+  app.post('/api/auth/tournament', verifyToken, function(req,res) {
+    new Tournament({
+      name: req.body.tournament.name,
+      date: req.body.tournament.date,
+      img: {
+        thumbnail: req.body.tournament.thumbnail,
+        banner: req.body.tournament.banner
+      }
+    }).save((err, tournament) => {
+      if(err) {
+        console.log(err)
+        res.status(500).send()
+      }
+      else res.send({ tournamentId: tournament._id})
+    })
+  })
+
+  app.post('/api/auth/onevone/match', verifyToken, function(req,res) {
     OneVOneListing.find({ $or: [{ _user: req.body.player_one._user}, { _user: req.body.player_two._user }]}, function(err, listings) {
       if(err) { res.status(500).send() }
       else {

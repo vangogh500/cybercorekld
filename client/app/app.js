@@ -14,7 +14,7 @@ import LadderPage from './ladderPage.js'
 import MatchesPageSync from './containers/matchesPageSync.js'
 import UserPageSync from './containers/userPageSync.js'
 import LadderAppSync from './containers/ladderAppSync.js'
-import TournamentSection from './components/tournamentApp/tournamentSection.js'
+import TournamentSectionSync from './containers/tournamentApp/tournamentSectionSync.js'
 import TournamentPage from './tournamentPage.js'
 import TeamsPage from './components/tournamentApp/teamsPage.js'
 
@@ -39,7 +39,7 @@ ReactDOM.render((
               </Route>
               <Route path="/auth/onevone/user/:userId" component={UserPageSync} />
             </Route>
-            <Route component={TournamentSection}>
+            <Route component={TournamentSectionSync}>
               <Route path="/auth/tournaments" component={TournamentPage} />
               <Route path="/auth/tournaments/teams" component={TeamsPage} />
             </Route>

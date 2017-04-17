@@ -3,6 +3,9 @@ import React from 'react'
 import TournamentLeftNav from './TournamentLeftNav.js'
 
 export default class TournamentSection extends React.Component {
+  componentDidMount() {
+    this.props.init()
+  }
   render() {
     return (
       <div className="row">

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var teamSchema = mongoose.Schema({
   name: { type: String, required: true },

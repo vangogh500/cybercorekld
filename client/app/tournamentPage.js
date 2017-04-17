@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Tournaments from './components/tournamentApp/tournaments.js'
+import TournamentsSync from './containers/tournamentApp/tournamentsSync.js'
 import ModalButton from './components/modalbutton.js'
-import AddTournamentForm from './components/tournamentApp/AddTournamentForm.js'
+import AddTournamentFormSync from './containers/tournamentApp/addTournamentFormSync.js'
 
 export default class TournamentPage extends React.Component {
   render() {
@@ -13,18 +13,18 @@ export default class TournamentPage extends React.Component {
             <div className="panel panel-default dark-red">
               <div className="panel-heading text-center"><h4>Tournaments</h4></div>
             </div>
-            <Tournaments />
+            <TournamentsSync />
           </div>
         </div>
         <ModalButton label={(<span>
-            <span className="glyphicon glyphicon-plus"></span>Add Tournament
+            <span className="glyphicon glyphicon-plus"></span><i className="fa fa-calendar-o"></i>
           </span>)}>
           <div className="modal-content">
             <div className="modal-header">
               <h4>Add Tournament</h4>
             </div>
             <div className="modal-body">
-              <AddTournamentForm />
+              <AddTournamentFormSync />
             </div>
           </div>
         </ModalButton>

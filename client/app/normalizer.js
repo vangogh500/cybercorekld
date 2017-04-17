@@ -13,3 +13,12 @@ export function normalizeLadderEntries(ladderData) {
     ladder: [ladderEntries]
   })
 }
+
+const tournament = new schema.Entity('tournaments')
+
+export function normalizeTournaments(tournamentsData) {
+  console.log(tournamentsData)
+  return normalize(tournamentsData, {
+    tournamentList: [tournament]
+  })
+}

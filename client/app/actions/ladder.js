@@ -158,14 +158,16 @@ export function addEntryToLadder(user, cb) {
       body: JSON.stringify({ user: user })
     }).then(response => resolve(response, (status, data) => {
         cb(status)
-        var newUser = Object.assign({}, user, { id: data.userId })
-        var newEntry = {
-          id: data.entryId,
-          _user: newUser.id,
-          kp: 1000,
-          matches: []
-        };
-        dispatch(addEntry(newEntry, newUser))
+        if(status == 200) {
+          var newUser = Object.assign({}, user, { id: data.userId })
+          var newEntry = {
+            id: data.entryId,
+            _user: newUser.id,
+            kp: 1000,
+            matches: []
+          };
+          dispatch(addEntry(newEntry, newUser))
+        }
       }))
   }
 }
