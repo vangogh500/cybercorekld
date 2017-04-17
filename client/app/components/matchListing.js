@@ -99,8 +99,8 @@ export default class MatchListing extends React.Component {
             </div>
           </div>
         </a>
-        <div className="collapse dark-grey" id={"collapse-" + this.props.match.id}>
-          <div className="panel-body text-white">
+        <div className="collapse" id={"collapse-" + this.props.match.id}>
+          <div className="panel-body dark-grey text-white">
             <div className="row row-eq-height">
               <div className="col-xs-2 text-center">
                 <span>{winCondition(this.props.match.win_condition)}</span>

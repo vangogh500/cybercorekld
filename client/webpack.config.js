@@ -27,6 +27,10 @@ module.exports = {
     // (The babel-loader will also compile your React templates to JavaScript.)
     loaders: [
       {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      },
+      {
         // Only transform *.js files.
         test: /\.js$/,
         // Don't transform any of the modules you depend on -- just transform

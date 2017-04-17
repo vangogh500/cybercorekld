@@ -42,19 +42,20 @@ body.overflow-x-hidden {
 }
 
 .dark-grey {
-  background-color: #111;
+  background-color: #111 !important;
   margin-bottom: 0px !important;
 }
 
 .list .list-group-item {
   padding: 20px 15px;
   border-color: #111;
-  border-width: 0px 0px 1px 0px;
+  border-width: 0px 0px 1px 0px !important;
   background-color: #000;
   color: #D8D8D8;
   line-height: 50px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-bottom: 0px;
 }
 
 .list .list-group-item:hover {
@@ -253,6 +254,15 @@ a.text-white:hover {
   color: #D7353D;
 }
 
+.text-grey {
+  color: #585858;
+}
+.text-yellow {
+  color: #F6CC00;
+}
+.text-bronze {
+  color: #FF8715;
+}
 .text-white {
   color: #FFF;
 }
