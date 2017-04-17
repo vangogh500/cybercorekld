@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router'
 
 export default class AuthHomePage extends React.Component {
+  componentDidMount() {
+    document.title = "CyberCore KLD - Home"
+  }
   render() {
     return (
       <div className="container">

@@ -4,6 +4,7 @@ import TournamentLeftNav from './TournamentLeftNav.js'
 
 export default class TournamentSection extends React.Component {
   componentDidMount() {
+    document.title = "CyberCore KLD - Tournaments"
     this.props.init()
   }
   render() {

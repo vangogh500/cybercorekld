@@ -22,7 +22,7 @@ export default class TournamentList extends React.Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-xs-6">
-              <img className="ladder-icon margin-right-10" src={thumbnail} />
+              <img className="tournament-icon margin-right-10" src={thumbnail} />
               {this.props.tournament.name}
             </div>
             <div className="col-xs-6">

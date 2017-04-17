@@ -74,6 +74,7 @@ export default class LadderAddUserForm extends React.Component {
         </div>
         <div className="form-group">
           <label>Thumbnail URL</label>
+          <p className="text-lightgrey">120x50 px</p>
           <input name="thumbnail" type="text" className="form-control" onChange={this.handleChange} />
         </div>
         <div className="form-group">
