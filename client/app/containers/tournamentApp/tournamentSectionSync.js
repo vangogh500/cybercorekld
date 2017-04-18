@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchTournaments } from '../../actions/tournament.js'
+import { fetchTournaments, fetchUsers } from '../../actions/tournament.js'
 
 import TournamentSection from '../../components/tournamentApp/tournamentSection.js'
 
@@ -11,6 +11,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     init: () => {
       dispatch(fetchTournaments())
+      dispatch(fetchUsers())
     }
   }
 }

@@ -1,4 +1,4 @@
-import { ADD_TOURNAMENT, FETCH_TOURNAMENTS, STATUS_REQUEST } from '../actions/tournament.js'
+import { ADD_TOURNAMENT, FETCH_TOURNAMENTS, STATUS_REQUEST, FETCH_USERS } from '../actions/tournament.js'
 
 function status(state = -1, action) {
   switch(action.type) {
@@ -46,10 +46,32 @@ function tournaments(state = {}, action) {
   }
 }
 
+function users(state = {
+  status: -1,
+  users: {}
+}, action) {
+  switch(action.type) {
+    case FETCH_USERS:
+      if(action.status === 200) {
+        return {
+          users: action.users,
+          status: action.status
+        }
+      }
+      else return {
+        ...state,
+        status: action.status
+      }
+    default:
+      return state
+  }
+}
+
 export function tournamentApp(state = {}, action) {
   return {
     status: status(state.status, action),
     tournamentList: tournamentList(state.tournamentList, action, state),
-    tournaments: tournaments(state.tournaments, action)
+    tournaments: tournaments(state.tournaments, action),
+    users: users(state.users, action)
   }
 }

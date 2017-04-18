@@ -1,8 +1,9 @@
-import { normalizeTournaments } from '../normalizer.js'
+import { normalizeTournaments, normalizeUsers } from '../normalizer.js'
 
 export const ADD_TOURNAMENT = 'ADD_TOURNAMENT'
 
 export const FETCH_TOURNAMENTS = 'FETCH_TOURNAMENTS'
+export const FETCH_USERS = 'FETCH_USERS'
 export const STATUS_REQUEST = 0
 
 function requestTournaments() {
@@ -12,11 +13,26 @@ function requestTournaments() {
   }
 }
 
+function requestUsers() {
+  return {
+    type: FETCH_USERS,
+    status: STATUS_REQUEST
+  }
+}
+
 function receiveTournaments(status, normalized) {
   return {
     type: FETCH_TOURNAMENTS,
     status,
     normalized
+  }
+}
+
+function receiveUsers(status, users) {
+  return {
+    type: FETCH_USERS,
+    status,
+    users
   }
 }
 
@@ -46,6 +62,26 @@ export function fetchTournaments() {
             delete tournament._id
           })
           dispatch(receiveTournaments(status, normalizeTournaments({tournamentList: data})))
+        }
+      }))
+  }
+}
+
+export function fetchUsers() {
+  return function(dispatch, getState) {
+    dispatch(requestUsers())
+    return fetch('http://localhost:3000/api/auth/users', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + getState().authorization.token
+      }
+    }).then(response => resolve(response, (status, data) => {
+        if(status === 200) {
+          data.forEach((user) => {
+            user.id = user._id
+            delete user._id
+          })
+          dispatch(receiveUsers(status,normalizeUsers({ users: data }).entities.users))
         }
       }))
   }

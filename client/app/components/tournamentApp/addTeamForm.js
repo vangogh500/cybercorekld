@@ -2,6 +2,7 @@ import React from 'react'
 
 import { validateURL } from '../../util.js'
 import LoadingAnimation from '../loadingAnimation.js'
+import AutoFillUser from '../autoFillUser.js'
 
 export default class LadderAddUserForm extends React.Component {
   constructor(props) {
@@ -45,6 +46,7 @@ export default class LadderAddUserForm extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const valid = false
     const form = (
       <form className="modal-form">
@@ -52,26 +54,11 @@ export default class LadderAddUserForm extends React.Component {
           <label>Name</label>
           <input name="name" type="text" className="form-control" onChange={this.handleChange} />
         </div>
-        <div className="form-group">
-          <label>Top</label>
-          <input name="top" type="text" className="form-control" onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <label>Jungle</label>
-          <input name="jungle" type="text" className="form-control" onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <label>Mid</label>
-          <input name="mid" type="text" className="form-control" onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <label>ADC</label>
-          <input name="adc" type="text" className="form-control" onChange={this.handleChange} />
-        </div>
-        <div className="form-group">
-          <label>Support</label>
-          <input name="support" type="text" className="form-control" onChange={this.handleChange} />
-        </div>
+        <AutoFillUser label="Top" data={this.props.users} />
+        <AutoFillUser label="Jungle" data={this.props.users} onClick={this.handleChange} />
+        <AutoFillUser label="Mid" data={this.props.users} onClick={this.handleChange} />
+        <AutoFillUser label="ADC" data={this.props.users} onClick={this.handleChange} />
+        <AutoFillUser label="Support" data={this.props.users} onClick={this.handleChange} />
         <button type="button" disabled={!valid} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
           Submit
         </button>

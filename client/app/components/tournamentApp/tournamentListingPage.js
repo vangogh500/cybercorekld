@@ -1,5 +1,5 @@
 import React from 'react'
-import AddTeamForm from './addTeamForm.js'
+import AddTeamFormSync from '../../containers/tournamentApp/addTeamFormSync.js'
 import ModalButton from '../modalbutton.js'
 
 export default class TournamentListingPage extends React.Component {
@@ -23,7 +23,7 @@ export default class TournamentListingPage extends React.Component {
                 <h4>Add Team</h4>
               </div>
               <div className="modal-body">
-                <AddTeamForm />
+                <AddTeamFormSync />
               </div>
             </div>
           </ModalButton>

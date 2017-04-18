@@ -6,7 +6,8 @@ const mapStateToProps = (state) => {
   return {
     data: state.tournament.tournamentList.map((tournamentId) => {
       return state.tournament.tournaments[tournamentId]
-    })
+    }),
+    status: state.tournament.status
   }
 }
 
