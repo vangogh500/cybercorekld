@@ -19,13 +19,18 @@ export default class AutoFillUser extends React.Component {
   getSuggestions(value) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length
-    return inputLength === 0 ? [] : this.props.data.filter((user) => {
+    return inputLength === 0 ? [] : Object.keys(this.props.data).map((key) => this.props.data[key]).filter((user) => {
       return user.name.toLowerCase().indexOf(inputValue) !== -1 || user.csm.toLowerCase().indexOf(inputValue) !== -1 || user.ign.toLowerCase().indexOf(inputValue) !== -1
     })
   }
 
   getSuggestionValue(value) {
-    this.props.onClick(this.props.path, value.id)
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: value.id
+      }
+    })
     return value.csm
   }
 

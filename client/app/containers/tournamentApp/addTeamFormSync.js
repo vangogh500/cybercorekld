@@ -5,7 +5,7 @@ import AddTeamForm from '../../components/tournamentApp/addTeamForm.js'
 const mapStateToProps = (state) => {
   return {
     userStatus: state.tournament.users.status,
-    users: Object.keys(state.tournament.users.users).map((key) => state.tournament.users.users[key])
+    users: state.tournament.users.users
   }
 }
 

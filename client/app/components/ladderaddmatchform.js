@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 import AutoFillChampion from './AutoFillChampion.js'
-import AutoFillUser from './AutoFillUser.js'
+import AutoFillUser from './autoFillUser.js'
 
 export default class LadderAddUserForm extends React.Component {
   constructor(props) {
@@ -95,9 +95,9 @@ export default class LadderAddUserForm extends React.Component {
       </form>
     )
 
+    console.log((this.state.status > 0) ? (<span className="card-title">{this.state.status + " "}</span>) : (<span></span>))
+
     switch(this.state.status) {
-      case -1:
-        return form
       case 0:
         return (
           <div className="spinner">
@@ -114,24 +114,12 @@ export default class LadderAddUserForm extends React.Component {
             </div>
           </div>
         )
-      case 200:
-        return (
-          <div>
-            <div className="card success-color">
-              <div className="card-block">
-                <span className="card-title">{this.state.status + " "}</span>
-                <span className="card-text">{this.state.msg}</span>
-              </div>
-            </div>
-            { form }
-          </div>
-        )
       default:
         return (
           <div>
-            <div className="card danger-color">
+            <div className={"card " + ((this.state.status === 200) ? 'success-color' : 'danger-color')}>
               <div className="card-block">
-                <span className="card-title">{this.state.status + " "}</span>
+                {((this.state.status > 0) ? (<span className="card-title">{this.state.status + " "}</span>) : (<span></span>))}
                 <span className="card-text">{this.state.msg}</span>
               </div>
             </div>

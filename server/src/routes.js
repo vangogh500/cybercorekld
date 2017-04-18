@@ -150,6 +150,60 @@ module.exports = function(app) {
     })
   })
 
+  app.post('/api/auth/team', verifyToken, function(req,res) {
+    Tournament.findById(req.body.tournamentId, function(err, found) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(found) {
+        new Team({
+          name: req.body.name,
+          roster: {
+            top: {
+              _user: req.body.roster.top
+            },
+            jg: {
+              _user: req.body.roster.jg
+            },
+            mid: {
+              _user: req.body.roster.mid
+            },
+            adc: {
+              _user: req.body.roster.adc
+            },
+            supp: {
+              _user: req.body.roster.supp
+            },
+            sub_1: {
+              _user: req.body.roster.sub_1
+            },
+            sub_2: {
+              _user: req.body.roster.sub_2
+            }
+          }
+        }).save(function(err, team) {
+          if(err) {
+            res.status(500).send()
+          }
+          else {
+            found.teams.push(team._id)
+            found.save(function(err) {
+              if(err) {
+                res.status(500).send()
+              }
+              else {
+                res.send({ teamId: team._id })
+              }
+            })
+          }
+        })
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
+
   app.post('/api/auth/tournament', verifyToken, function(req,res) {
     new Tournament({
       name: req.body.tournament.name,

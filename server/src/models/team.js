@@ -7,7 +7,7 @@ var teamSchema = mongoose.Schema({
     top: {
       _user: { type: Schema.Types.ObjectId, ref: 'Users'}
     },
-    jungle: {
+    jg: {
       _user: { type: Schema.Types.ObjectId, ref: 'Users'}
     },
     mid: {
@@ -19,10 +19,10 @@ var teamSchema = mongoose.Schema({
     supp: {
       _user: { type: Schema.Types.ObjectId, ref: 'Users'}
     },
-    sub_one: {
+    sub_1: {
       _user: { type: Schema.Types.ObjectId, ref: 'Users'}
     },
-    sub_two: {
+    sub_2: {
       _user: { type: Schema.Types.ObjectId, ref: 'Users'}
     }
   },

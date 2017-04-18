@@ -1,6 +1,7 @@
 import { normalizeTournaments, normalizeUsers } from '../normalizer.js'
 
 export const ADD_TOURNAMENT = 'ADD_TOURNAMENT'
+export const ADD_TEAM = 'ADD_TEAM'
 
 export const FETCH_TOURNAMENTS = 'FETCH_TOURNAMENTS'
 export const FETCH_USERS = 'FETCH_USERS'
