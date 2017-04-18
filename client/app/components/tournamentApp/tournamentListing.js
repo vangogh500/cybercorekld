@@ -4,6 +4,7 @@ const DEFAULT_THUMBNAIL = 'http://ddragon.leagueoflegends.com/cdn/7.5.1/img/prof
 
 export default class TournamentList extends React.Component {
   render() {
+    const date = new Date(this.props.tournament.date)
     const color = (() => {
       switch(this.props.tournament.status) {
         case 'scheduled':
@@ -26,7 +27,7 @@ export default class TournamentList extends React.Component {
               {this.props.tournament.name}
             </div>
             <div className="col-xs-6">
-              <span className="text-grey margin-right-10">{new Date(this.props.tournament.date).toLocaleString().slice(10)}</span>
+              <span className="text-grey margin-right-10">{date.getDate() + "/" + date.getMonth() + "/" + date.getYear()}</span>
               <span className={"pull-right " + color}><i className="fa fa-circle margin-right-10"></i>{this.props.tournament.status}</span>
             </div>
           </div>

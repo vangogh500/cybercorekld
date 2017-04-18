@@ -94,6 +94,20 @@ module.exports = function(app) {
     else res.status(401).send()
   })
 
+  app.get('/api/auth/users', verifyToken, function(req,res) {
+    User.find({}).exec(function(err,users) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(users) {
+        res.send(users)
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
+
   app.get('/api/auth/onevone/ladder', verifyToken, function(req,res) {
     OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').populate('matches').exec(function(err, ladder) {
       if(err) {
@@ -123,13 +137,11 @@ module.exports = function(app) {
   })
 
   app.get('/api/auth/tournaments', function(req,res) {
-    console.log("test")
     Tournament.find({}).sort({ date: -1 }).populate('teams').exec(function(err, tournaments) {
       if(err) {
         res.status(500)
       }
       else if(tournaments) {
-        console.log(tournaments)
         res.send(tournaments)
       }
       else {

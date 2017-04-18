@@ -17,6 +17,7 @@ import LadderAppSync from './containers/ladderAppSync.js'
 import TournamentSectionSync from './containers/tournamentApp/tournamentSectionSync.js'
 import TournamentPage from './tournamentPage.js'
 import TeamsPage from './components/tournamentApp/teamsPage.js'
+import TournamentListingPage from './components/tournamentApp/tournamentListingPage.js'
 
 import { loginFromStorage } from './actions/authorization.js'
 
@@ -42,6 +43,7 @@ ReactDOM.render((
             <Route component={TournamentSectionSync}>
               <Route path="/auth/tournaments" component={TournamentPage} />
               <Route path="/auth/tournaments/teams" component={TeamsPage} />
+              <Route path="/auth/tournament" component={TournamentListingPage} />
             </Route>
           </Route>
         </Route>
