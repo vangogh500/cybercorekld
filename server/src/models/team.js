@@ -5,19 +5,19 @@ var teamSchema = mongoose.Schema({
   name: { type: String, required: true },
   roster: {
     top: {
-      _user: { type: Schema.Types.ObjectId, ref: 'Users'}
+      _user: { type: Schema.Types.ObjectId, ref: 'Users', required: true}
     },
     jg: {
-      _user: { type: Schema.Types.ObjectId, ref: 'Users'}
+      _user: { type: Schema.Types.ObjectId, ref: 'Users', required: true}
     },
     mid: {
-      _user: { type: Schema.Types.ObjectId, ref: 'Users'}
+      _user: { type: Schema.Types.ObjectId, ref: 'Users', required: true}
     },
     adc: {
-      _user: { type: Schema.Types.ObjectId, ref: 'Users'}
+      _user: { type: Schema.Types.ObjectId, ref: 'Users', required: true}
     },
     supp: {
-      _user: { type: Schema.Types.ObjectId, ref: 'Users'}
+      _user: { type: Schema.Types.ObjectId, ref: 'Users', required: true}
     },
     sub_1: {
       _user: { type: Schema.Types.ObjectId, ref: 'Users'}
@@ -31,7 +31,8 @@ var teamSchema = mongoose.Schema({
     place: Number,
     issued: { type: Date, default: Date.now }
   }],
-  creation: { type: Date, default: Date.now }
+  creation: { type: Date, default: Date.now },
+  matches: [{ type: Schema.Types.ObjectId, ref: 'TournamentMatch'}]
 })
 
 module.exports = mongoose.model('Team', teamSchema)

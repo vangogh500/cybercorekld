@@ -1,4 +1,5 @@
 import React from 'react'
+
 import TournamentListing from './tournamentListing.js'
 import LoadingAnimation from '../loadingAnimation.js'
 

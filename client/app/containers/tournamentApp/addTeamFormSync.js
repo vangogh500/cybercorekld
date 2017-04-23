@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { addTeamToTournament } from '../../actions/tournament.js'
 
 import AddTeamForm from '../../components/tournamentApp/addTeamForm.js'
 
@@ -10,7 +11,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    onSubmit: (team, cb) => {
+      dispatch(addTeamToTournament(team, cb))
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTeamForm)

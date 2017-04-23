@@ -15,6 +15,8 @@ export default class LadderAddUserForm extends React.Component {
       rightNow: moment(),
       date: moment(),
       name: '',
+      fcbk: '',
+      stream: '',
       thumbnail: '',
       banner: '',
       msg: 'This is a msg'
@@ -39,10 +41,12 @@ export default class LadderAddUserForm extends React.Component {
   handleClick(e) {
     e.preventDefault()
     const tournament = JSON.parse(JSON.stringify({
-      date: this.state.date.toDate(),
+      date: this.state.date.format('YYYY-MM-DD'),
       name: this.state.name,
       thumbnail: this.state.thumbnail ? this.state.thumbnail : undefined,
-      banner: this.state.banner ? this.state.banner : undefined
+      banner: this.state.banner ? this.state.banner : undefined,
+      fcbk: this.state.fcbk ? this.state.fcbk : undefined,
+      stream: this.state.stream ? this.state.stream : undefined
     }))
     console.log(tournament)
     this.props.onSubmit(tournament, (status) => {
@@ -67,6 +71,14 @@ export default class LadderAddUserForm extends React.Component {
         <div className="form-group">
           <label>Name</label>
           <input name="name" type="text" className="form-control" onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <label>Facebook</label>
+          <input name="fcbk" type="text" className="form-control" onChange={this.handleChange} />
+        </div>
+        <div className="form-group">
+          <label>Stream</label>
+          <input name="stream" type="text" className="form-control" onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <label>Date</label>

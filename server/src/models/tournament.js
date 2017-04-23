@@ -1,6 +1,11 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
+var ImgSchema = new Schema({
+  thumbnail: { type: String, default: 'http://ddragon.leagueoflegends.com/cdn/7.5.1/img/profileicon/23.png'},
+  banner: { type: String, default: 'https://i.ytimg.com/vi/DLiNHCmJzV4/maxresdefault.jpg'}
+}, { _id: false });
+
 var tournamentSchema = mongoose.Schema({
   teams: [{
     type: Schema.Types.ObjectId,
@@ -27,9 +32,11 @@ var tournamentSchema = mongoose.Schema({
   },
   name: { type: String, required: true },
   date: { type: Date, required: true, index: true },
-  img: {
-    thumbnail: String,
-    banner: String
+  img: { type: ImgSchema, default: ImgSchema },
+  matches: [{ type: Schema.Types.ObjectId, ref: 'TournamentMatch' }],
+  links: {
+    fcbk: String,
+    stream: String
   }
 })
 

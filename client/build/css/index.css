@@ -11,6 +11,18 @@ body.overflow-x-hidden {
   overflow-x: hidden !important;
 }
 
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.block {
+  display: block;
+}
+
 #main-nav {
   background-color: #060606 !important;
   height: 50px;
@@ -91,7 +103,8 @@ body.overflow-x-hidden {
 }
 
 .nav-tabs {
-  border-bottom: 0px !important;
+  margin-bottom: 20px !important;
+  border-bottom: none !important;
 }
 
 .nav-tabs li {
@@ -99,7 +112,8 @@ body.overflow-x-hidden {
 }
 
 .row-fluid {
-  margin: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 .nav-tabs li a {
@@ -281,6 +295,23 @@ form .btn {
 .profile-label {
   font-weight: bold;
   margin-right: 5px;
+}
+
+button {
+  border: none !important;
+}
+
+button[disabled] {
+  cursor: not-allowed !important;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  opacity: .65;
+}
+
+.black {
+  background-color: #000;
+  color: #FFF;
 }
 
 .black-nav-item {

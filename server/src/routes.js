@@ -7,6 +7,8 @@ var LadderMatch = require('./models/laddermatch.js')
 var Team = require('./models/team.js')
 var Tournament = require('./models/tournament.js')
 
+var tournamentLib = require('./lib/tournament.js')
+
 var elo = require('./lib/elo.js')
 
 function verifyToken(req, res, next) {
@@ -137,11 +139,18 @@ module.exports = function(app) {
   })
 
   app.get('/api/auth/tournaments', function(req,res) {
-    Tournament.find({}).sort({ date: -1 }).populate('teams').exec(function(err, tournaments) {
+    Tournament.find({}).sort({ date: -1 }).populate('matches').exec(function(err, tournaments) {
       if(err) {
+        console.log(err)
         res.status(500)
       }
       else if(tournaments) {
+        tournaments.forEach((tournament) => {
+          if(tournament.date < Date.now()) {
+            tournament.status = 'completed'
+          }
+          tournament.save()
+        })
         res.send(tournaments)
       }
       else {
@@ -150,13 +159,28 @@ module.exports = function(app) {
     })
   })
 
+  app.get('/api/auth/teams', function(req,res) {
+    Team.find({}, function(err, teams) {
+      if(err) {
+        res.status(500)
+      }
+      else if(teams) {
+        res.send(teams)
+      }
+      else {
+        res.status(404).send
+      }
+    })
+  })
+
   app.post('/api/auth/team', verifyToken, function(req,res) {
     Tournament.findById(req.body.tournamentId, function(err, found) {
       if(err) {
+        console.log(err)
         res.status(500).send()
       }
       else if(found) {
-        new Team({
+        var newTeam = {
           name: req.body.name,
           roster: {
             top: {
@@ -181,14 +205,19 @@ module.exports = function(app) {
               _user: req.body.roster.sub_2
             }
           }
-        }).save(function(err, team) {
+        }
+        if(!newTeam.roster.sub_1._user) delete newTeam.roster.sub_1
+        if(!newTeam.roster.sub_2._user) delete newTeam.roster.sub_2
+        new Team(newTeam).save(function(err, team) {
           if(err) {
+            console.log(err)
             res.status(500).send()
           }
           else {
             found.teams.push(team._id)
             found.save(function(err) {
               if(err) {
+                console.log(err)
                 res.status(500).send()
               }
               else {
@@ -211,6 +240,10 @@ module.exports = function(app) {
       img: {
         thumbnail: req.body.tournament.thumbnail,
         banner: req.body.tournament.banner
+      },
+      links: {
+        fcbk: req.body.tournament.fcbk,
+        stream: req.body.tournament.stream
       }
     }).save((err, tournament) => {
       if(err) {
@@ -218,6 +251,36 @@ module.exports = function(app) {
         res.status(500).send()
       }
       else res.send({ tournamentId: tournament._id})
+    })
+  })
+
+  app.put('/api/auth/tournament/:tournamentId/:status', verifyToken, function(req,res) {
+    req.params.status = req.params.status.replace("_", " ")
+    Tournament.findById(req.params.tournamentId, function(err, found) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(found) {
+        found.status = req.params.status
+        found.save(function(err) {
+          if(err) {
+            res.status(500).send()
+          }
+          else {
+            if(req.params.status === 'in progress' && found.matches.length === 0) {
+              tournamentLib.initialize(found, (matches) => {
+                res.send(matches)
+              })
+            }
+            else {
+              res.send([])
+            }
+          }
+        })
+      }
+      else {
+        res.status(404).send()
+      }
     })
   })
 

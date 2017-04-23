@@ -5,6 +5,7 @@ var app = express()
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 var credentials = require('./credentials.js')
+
 mongoose.connect(credentials.mongodb.url)
 
 app.use(bodyParser.json())

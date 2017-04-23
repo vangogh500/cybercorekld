@@ -33,25 +33,14 @@ export default class LadderLeftNav extends React.Component {
       <div id="left-nav" className="panel panel-default">
         <div className="panel-heading text-center z-depth-2"><h4>Navigate</h4></div>
         {
-          (this.state.location == 'tournaments') ? (
-            <ul className="nav nav-pills nav-stacked" role="tablist">
-              <li className={"nav-item " + (this.state.active == 'tournaments' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={(e) => this.handleMouseEnter(e, 'tournaments')} onMouseLeave={this.handleMouseExit}>
-                  <a className="nav-link" data-toggle="tab" role="tab">Tournaments</a>
-              </li>
-              <li className={"nav-item " + (this.state.active == 'tournaments/teams' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={(e) => this.handleMouseEnter(e, 'tournaments/teams')} onMouseLeave={this.handleMouseExit}>
-                <Link to="/auth/tournaments/teams" className="nav-link" data-toggle="tab" role="tab">Teams</Link>
-              </li>
-            </ul>
-          ) : (
-            <ul className="nav nav-pills nav-stacked" role="tablist">
-              <li className={"nav-item " + (this.state.active == 'tournaments' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={(e) => this.handleMouseEnter(e, 'tournaments')} onMouseLeave={this.handleMouseExit}>
-                  <Link to="/auth/tournaments" className="nav-link" data-toggle="tab" role="tab">Tournaments</Link>
-              </li>
-              <li className={"nav-item " + (this.state.active == 'tournaments/teams' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={(e) => this.handleMouseEnter(e, 'tournaments/teams')} onMouseLeave={this.handleMouseExit}>
-                  <a className="nav-link" data-toggle="tab" role="tab">Teams</a>
-              </li>
-            </ul>
-          )
+          <ul className="nav nav-pills nav-stacked" role="tablist">
+            <li className={"nav-item " + (this.state.active == 'tournaments' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={(e) => this.handleMouseEnter(e, 'tournaments')} onMouseLeave={this.handleMouseExit}>
+              {(this.state.location !== 'tournaments') ? <Link to="/auth/tournaments" className="nav-link" data-toggle="tab" role="tab">Tournaments</Link> : <a className="nav-link" data-toggle="tab" role="tab">Tournaments</a> }
+            </li>
+            <li className={"nav-item " + (this.state.active == 'tournaments/teams' ? 'active z-depth-4' : 'z-depth-2')} onMouseEnter={(e) => this.handleMouseEnter(e, 'tournaments/teams')} onMouseLeave={this.handleMouseExit}>
+              {(this.state.location !== 'tournaments/teams') ? <Link to="/auth/tournaments/teams" className="nav-link" data-toggle="tab" role="tab">Teams</Link> : <a className="nav-link" data-toggle="tab" role="tab">Teams</a> }
+            </li>
+          </ul>
         }
       </div>
     )

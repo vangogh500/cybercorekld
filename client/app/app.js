@@ -14,10 +14,12 @@ import LadderPage from './ladderPage.js'
 import MatchesPageSync from './containers/matchesPageSync.js'
 import UserPageSync from './containers/userPageSync.js'
 import LadderAppSync from './containers/ladderAppSync.js'
-import TournamentSectionSync from './containers/tournamentApp/tournamentSectionSync.js'
+import TournamentsAppSync from './containers/tournamentApp/tournamentsAppSync.js'
 import TournamentPage from './tournamentPage.js'
-import TeamsPage from './components/tournamentApp/teamsPage.js'
-import TournamentListingPage from './components/tournamentApp/tournamentListingPage.js'
+import TeamsPageSync from './containers/tournamentApp/teamsPageSync.js'
+import TournamentListingSectionSync from './containers/tournamentApp/tournamentListingSectionSync.js'
+import TournamentListingTeams from './components/tournamentApp/tournamentListingTeams.js'
+import TournamentListingBracket from './components/tournamentApp/tournamentListingBracket.js'
 
 import { loginFromStorage } from './actions/authorization.js'
 
@@ -40,10 +42,13 @@ ReactDOM.render((
               </Route>
               <Route path="/auth/onevone/user/:userId" component={UserPageSync} />
             </Route>
-            <Route component={TournamentSectionSync}>
+            <Route component={TournamentsAppSync}>
               <Route path="/auth/tournaments" component={TournamentPage} />
-              <Route path="/auth/tournaments/teams" component={TeamsPage} />
-              <Route path="/auth/tournament" component={TournamentListingPage} />
+              <Route path="/auth/tournaments/teams" component={TeamsPageSync} />
+              <Route path="/auth/tournament/:teamId" component={TournamentListingSectionSync}>
+                <IndexRoute component={TournamentListingTeams} />
+                <Route path="/auth/tournament/:teamId/bracket" component={TournamentListingBracket} />
+              </Route>
             </Route>
           </Route>
         </Route>

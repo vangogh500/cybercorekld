@@ -50,7 +50,9 @@ export default class LadderAddUserForm extends React.Component {
 
   handleClick(e) {
     e.preventDefault()
+    this.setState({ status: 0 })
     const team = JSON.parse(JSON.stringify({
+      tournamentId: this.props.tournamentId,
       name: this.state.name,
       roster: {
         top: this.state.top,
@@ -71,7 +73,7 @@ export default class LadderAddUserForm extends React.Component {
           this.setState({ msg: 'Unauthorized.', status })
           break
         default:
-          this.setState({ msg: 'Oops! Something went wrong.', state })
+          this.setState({ msg: 'Oops! Something went wrong.', status })
       }
     })
   }
@@ -93,13 +95,13 @@ export default class LadderAddUserForm extends React.Component {
         <h5 className="text-center"><i>Optional</i></h5>
         <AutoFillUser name="sub_1" label="Sub 1" data={this.props.users} onChange={this.handleChange} />
         <AutoFillUser name="sub_2" label="Sub 2" data={this.props.users} onChange={this.handleChange} />
-        <button type="button" disabled={this.state.status === 0} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
+        <button type="button" disabled={(this.state.status === STATUS_INVALID)} className="btn btn-danger waves-effect pull-right" onClick={this.handleClick}>
           Submit
         </button>
         <div className="clearfix"></div>
       </form>
     )
-    const msg = (
+    const msg = (this.state.status === STATUS_AWAIT) ? <div></div> : (
       <div className={"card " + ((this.state.status === 200) ? "success-color" : "danger-color") }>
         <div className="card-block">
           { (this.state.status > 0) ? <span className="card-title margin-right-10">{this.state.status + " "}</span> : <span></span>}

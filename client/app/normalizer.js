@@ -14,7 +14,12 @@ export function normalizeLadderEntries(ladderData) {
   })
 }
 
-const tournament = new schema.Entity('tournaments')
+const team = new schema.Entity('teams')
+const tournamentMatch = new schema.Entity('tournamentMatches')
+
+const tournament = new schema.Entity('tournaments', {
+  matches: [tournamentMatch]
+})
 
 export function normalizeTournaments(tournamentsData) {
   return normalize(tournamentsData, {
@@ -22,8 +27,21 @@ export function normalizeTournaments(tournamentsData) {
   })
 }
 
+export function normalizeTeams(teamsData) {
+  return normalize(teamsData, {
+    teams: [team]
+  })
+}
+
 export function normalizeUsers(usersData) {
   return normalize(usersData, {
     users: [user]
+  })
+}
+
+
+export function normalizeTournamentMatches(tournamentMatchesData) {
+  return normalize(tournamentMatchesData, {
+    matches: [tournamentMatch]
   })
 }
