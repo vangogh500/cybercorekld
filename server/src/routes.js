@@ -12,7 +12,6 @@ var tournamentLib = require('./lib/tournament.js')
 var elo = require('./lib/elo.js')
 
 function verifyToken(req, res, next) {
-
   if(req.headers.authorization) {
     var token = req.headers.authorization.slice(7)
     jwt.verify(token, credentials.jwt.secret, function(err, data) {

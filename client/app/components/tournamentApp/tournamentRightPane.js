@@ -1,4 +1,5 @@
 import React from 'react'
+import ModalButton from '../modalbutton.js'
 
 export default class TournamentRightPane extends React.Component {
   constructor(props) {
@@ -26,7 +27,6 @@ export default class TournamentRightPane extends React.Component {
     })
   }
   render() {
-    console.log(this.props.tournament.status)
     const date = new Date(this.props.tournament.date)
     const color = (() => {
       switch(this.props.tournament.status) {
@@ -53,6 +53,19 @@ export default class TournamentRightPane extends React.Component {
             <hr />
             <p><i className="fa fa-calendar margin-right-10"></i>{date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()}</p>
             <p><i className="fa fa-users margin-right-10"></i>{this.props.tournament.teams.length + " teams"}</p>
+            <hr />
+            <ModalButton className="width-100 block text-center btn-sm" label={(<span>
+                <span className="glyphicon glyphicon-pencil"></span>
+              </span>)}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h4>Edit Games</h4>
+                </div>
+                <div className="modal-body">
+                  
+                </div>
+              </div>
+            </ModalButton>
           </div>
         </div>
       </div>
