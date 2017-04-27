@@ -5,6 +5,11 @@ const syncMatch = (matchId, state) => {
   const match = state.tournament.matches[matchId]
   const homeTeam = state.tournament.teams[match.sides.home.team.id]
   const visitorTeam = match.sides.visitor ? state.tournament.teams[match.sides.visitor.team.id] : null
+
+  const homeScore = match.sides.home.score ? match.sides.home.score.score : undefined
+  const visitorScore = (match.sides.visitor && match.sides.visitor.score) ? match.sides.visitor.score.score : undefined
+  const winner = (homeScore && visitorScore) ? ((homeScore > visitorScore) ? match.sides.home.team.id : match.sides.visitor.team.id) : undefined
+
   var matchSync = {
     ...match,
     scheduled: (new Date(match.scheduled).getTime() / 1000),
@@ -19,7 +24,10 @@ const syncMatch = (matchId, state) => {
           ...match.sides.home.team,
           id: match.sides.home.team.id ? match.sides.home.team.id : matchId + '0',
           name: homeTeam ? homeTeam.name : match.sides.home.team.name
-        }
+        },
+        score: match.sides.home.score ? {
+          score: match.sides.home.score.score
+        } : undefined
       },
       visitor: match.sides.visitor ? {
         ...match.sides.visitor,
@@ -31,14 +39,17 @@ const syncMatch = (matchId, state) => {
           ...match.sides.visitor.team,
           id: match.sides.visitor.team.id ? match.sides.visitor.team.id : matchId + '1',
           name: visitorTeam ? visitorTeam.name : match.sides.visitor.team.name
-        }
+        },
+        score: match.sides.visitor.score ? {
+          score: match.sides.visitor.score.score
+        } : undefined
       } : null
-    }
+    },
+    winner: winner
   }
   if(matchSync.sides.visitor == null) {
     delete matchSync.sides.visitor
   }
-  console.log(matchSync)
   return matchSync
 }
 

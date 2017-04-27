@@ -1,5 +1,6 @@
 import React from 'react'
 import ModalButton from '../modalbutton.js'
+import BracketFormSync from '../../containers/tournamentApp/bracketFormSync.js'
 
 export default class TournamentRightPane extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ export default class TournamentRightPane extends React.Component {
                   <h4>Edit Games</h4>
                 </div>
                 <div className="modal-body">
-                  
+                  <BracketFormSync tournamentId={this.props.tournament.id} />
                 </div>
               </div>
             </ModalButton>
