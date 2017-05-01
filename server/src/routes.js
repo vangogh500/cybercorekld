@@ -6,10 +6,14 @@ var User = require('./models/user.js')
 var LadderMatch = require('./models/laddermatch.js')
 var Team = require('./models/team.js')
 var Tournament = require('./models/tournament.js')
-
+var TournamentMatch = require('./models/tournamentMatch.js')
 var tournamentLib = require('./lib/tournament.js')
-
 var elo = require('./lib/elo.js')
+
+/**
+ * @apiDefine admin User access only
+ * Allows access to /auth
+ */
 
 function verifyToken(req, res, next) {
   if(req.headers.authorization) {
@@ -30,6 +34,27 @@ function verifyToken(req, res, next) {
 }
 
 module.exports = function(app) {
+
+  /**
+   * TODO: Don't return username through the response
+   * @api {post} /login Authorize Client
+   * @apiName Login
+   * @apiGroup Authorization
+   * @apiPermission none
+   *
+   * @apiParam {String} user Username
+   * @apiParam {String} password Password
+   *
+   * @apiSuccess {String} token JSON Web Token used for authentication.
+   *
+   * @apiSuccessExample {Number} Success
+   *    200
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.post('/api/login', function(req,res) {
     if(req.body.user == credentials.credentials.user && req.body.password == credentials.credentials.password) {
       jwt.sign({ user: 'admin' }, credentials.jwt.secret, { expiresIn: '7 days'}, function(err, token) {
@@ -46,6 +71,28 @@ module.exports = function(app) {
     }
   })
 
+  /**
+   * TODO: Change request body to not have to include user
+   * TODO: Change userId to userid
+   * TODO: Change entryId to ladderid
+   * TODO: Seperate logic
+   * @api {post} /onevone/user Create User and LadderListing
+   * @apiName CreateUserAndListing
+   * @apiGroup Ladder
+   * @apiPermission admin
+   *
+   * @apiParam {String} csm CSM account
+   * @apiParam {String} name Real name
+   * @apiParam {String} ign League IGN
+   * @apiParam {String} email Email
+   *
+   * @apiSuccess {String} userid User ID
+   * @apiSuccess {String} ladderid Ladder ID
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   *
+   */
   app.post('/api/auth/onevone/user', verifyToken, function(req,res) {
     var newUser = new User({
       csm: req.body.user.csm,
@@ -67,6 +114,10 @@ module.exports = function(app) {
     })
   })
 
+  /**
+   * TODO: Seperate logic
+   * TODO: take in userid
+   */
   app.delete('/api/auth/onevone/user', verifyToken, function(req,res) {
     if(req.body.password === credentials.credentials.password) {
       OneVOneListing.findOne({ _id: req.body.listingId }, function(err, listing) {
@@ -95,6 +146,23 @@ module.exports = function(app) {
     else res.status(401).send()
   })
 
+  /**
+   * TODO: Either split logic or vary response with auth
+   * TODO: Return in property called users
+   * TODO: Order by created
+   * @api {get} /users Get All Users
+   * @apiName GetUsers
+   * @apiGroup User
+   * @apiPermission admin
+   *
+   * @apiSuccess {json[]} users Array of users in order of most recent creation date
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.get('/api/auth/users', verifyToken, function(req,res) {
     User.find({}).exec(function(err,users) {
       if(err) {
@@ -109,6 +177,25 @@ module.exports = function(app) {
     })
   })
 
+
+  /**
+   * TODO: Check if you want to populate
+   * TODO: Change route to ladders
+   * TODO: Return in property called ladderentries
+   * TODO: Either split logic or return something different depending on auth
+   * @api {get} /onevone/ladders Get All Entries
+   * @apiName GetLadderEntries
+   * @apiGroup Ladder
+   * @apiPermission admin
+   *
+   * @apiSuccess {json[]} ladderentries Ladder Entries in order of descending kp
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.get('/api/auth/onevone/ladder', verifyToken, function(req,res) {
     OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').populate('matches').exec(function(err, ladder) {
       if(err) {
@@ -123,6 +210,21 @@ module.exports = function(app) {
     })
   })
 
+  /**
+   * TODO: Return in property called matches
+   * @api {get} /onevone/matches Get All Matches
+   * @apiName GetLadderMatches
+   * @apiGroup Ladder
+   * @apiPermission none
+   *
+   * @apiSuccess {json[]} matches Array of matches in order of most recent.
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.get('/api/onevone/matches', function(req,res) {
     LadderMatch.find({}).sort({ date: -1 }).exec(function(err, matches) {
       if(err) {
@@ -137,10 +239,25 @@ module.exports = function(app) {
     })
   })
 
+  /**
+   * TODO: Return in property called tournaments
+   * TODO: Check if you want to populate matches
+   * @api {get} /tournaments Get All Tournaments
+   * @apiName GetTournaments
+   * @apiGroup Tournament
+   * @apiPermission none
+   *
+   * @apiSuccess {json[]} tournaments An array of tournaments in order of most recent.
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.get('/api/auth/tournaments', function(req,res) {
     Tournament.find({}).sort({ date: -1 }).populate('matches').exec(function(err, tournaments) {
       if(err) {
-        console.log(err)
         res.status(500)
       }
       else if(tournaments) {
@@ -158,6 +275,21 @@ module.exports = function(app) {
     })
   })
 
+  /**
+   * TODO: Return in property called teams
+   * @api {get} /teams Get All Teams
+   * @apiName GetTeams
+   * @apiGroup Team
+   * @apiPermission none
+   *
+   * @apiSuccess {json[]} teams An array of teams ordered by most recent creation date.
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.get('/api/auth/teams', function(req,res) {
     Team.find({}, function(err, teams) {
       if(err) {
@@ -172,6 +304,31 @@ module.exports = function(app) {
     })
   })
 
+  /**
+   * TODO: Change req.body.roster.top => req.body.top
+   * TODO: Change teamId to teamid
+   * @api {post} /team Create Team
+   * @apiName CreateTeam
+   * @apiGroup Team
+   * @apiPermission none
+   *
+   * @apiParam {String} name Team name.
+   * @apiParam {String} top User ID for top laner.
+   * @apiParam {String} jg User ID for jungler.
+   * @apiParam {String} mid User ID for mid laner.
+   * @apiParam {String} adc User ID for ADC.
+   * @apiParam {String} supp User ID for support.
+   * @apiParam {String} [sub_1] User ID for substitute 1.
+   * @apiParam {String} [sub_2] User ID for substitute 2.
+   *
+   * @apiSuccess {String} teamid Team ID.
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.post('/api/auth/team', verifyToken, function(req,res) {
     Tournament.findById(req.body.tournamentId, function(err, found) {
       if(err) {
@@ -232,6 +389,29 @@ module.exports = function(app) {
     })
   })
 
+  /**
+   * TODO: Change req.body
+   * TODO: Change tournamentId to tournamentid
+   * @api {post} /team Create Tournament
+   * @apiName CreateTournament
+   * @apiGroup Tournament
+   * @apiPermission none
+   *
+   * @apiParam {String} name Tournament name.
+   * @apiParam {date} date Tournament date.
+   * @apiParam {String} [thumbnail] URL to tournament thumbnail.
+   * @apiParam {String} [banner] URL to tournament banner.
+   * @apiParam {String} [facebook] Facebook link.
+   * @apiParam {String} [stream] Stream link.
+   *
+   * @apiSuccess {String} tournamentid Tournament ID.
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
   app.post('/api/auth/tournament', verifyToken, function(req,res) {
     new Tournament({
       name: req.body.tournament.name,
@@ -276,6 +456,45 @@ module.exports = function(app) {
             }
           }
         })
+      }
+      else {
+        res.status(404).send()
+      }
+    })
+  })
+  /**
+   * @api {put} /auth/tournament/match/:id Edit Tournamnent Match
+   * @apiName EditTournamentMatch
+   * @apiGroup Tournament
+   * @apiPermission admin
+   *
+   * @apiParam {Number} homeScore Score of the home team.
+   * @apiParam {Number} visitorScore Score of the visiting team.
+   * @apiSuccessExample {Number} Success
+   *    200
+   * @apiErrorExample {Number} Server Error
+   *    500
+   * @apiErrorExample {Number} Not Found
+   *    404
+   *
+   */
+  app.put('/api/auth/tournament/match/:id', verifyToken, function(req,res) {
+    const doc = {
+      $set: {
+        "sides.home.score": {
+          score: req.body.homeScore
+        },
+        "sides.visitor.score": {
+          score: req.body.visitorScore
+        }
+      }
+    }
+    TournamentMatch.findOneAndUpdate({ _id: req.params.id }, doc).exec(function(err, updated) {
+      if(err) {
+        res.status(500).send()
+      }
+      else if(update) {
+        res.send()
       }
       else {
         res.status(404).send()

@@ -1,3 +1,17 @@
+/**
+ * @apiDefine Team Team
+ *
+ * @apiDescription This is the Description.
+ */
+
+
+/**
+ * @apiDefine teamSchema
+ *
+ * @apiParam {String} csm CSM account
+ */
+
+
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
