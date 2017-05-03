@@ -2,3 +2,4 @@ node_modules
 credentials.js
 npm-debug.log
 /server/doc
+/client/doc

@@ -1,4 +1,4 @@
 {
   "source": "app",
-  "destination": "./dist/esdoc"
+  "destination": "./doc"
 }

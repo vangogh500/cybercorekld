@@ -5,9 +5,11 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
+import { AUTH_HOME_LINK, AUTH_LOGIN_LINK } from './res/strings.js'
+
 import NavbarSync from './containers/navbarsync.js'
-import AuthPage from './authPage.js'
-import AuthHomePage from './AuthHomePage.js'
+import AuthPage from './authorization/components/authLoginPage.js'
+import AuthHomePage from './authorization/components/AuthHomePage.js'
 import AuthSectionSync from './containers/authSectionSync.js'
 import LadderSection from './components/ladderSection.js'
 import LadderPage from './ladderPage.js'
@@ -32,9 +34,9 @@ ReactDOM.render((
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={NavbarSync}>
-          <Route path="/auth" component={AuthSectionSync}>
+          <Route path={AUTH_LOGIN_LINK} component={AuthSectionSync}>
             <IndexRoute component={AuthPage} />
-            <Route path="/auth/home" component={AuthHomePage} />
+            <Route path={AUTH_HOME_LINK} component={AuthHomePage} />
             <Route path="/auth/onevone" component={LadderAppSync}>
               <Route component={LadderSection}>
                 <Route path="/auth/onevone/matches" component={MatchesPageSync} />
