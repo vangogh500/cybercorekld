@@ -1,20 +1,32 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import { AUTH_FORM_USERNAME_PROMPT, AUTH_FORM_PASSWORD_PROMPT, AUTH_FORM_200_MESSAGE, AUTH_FORM_401_MESSAGE, AUTH_FORM_500_MESSAGE  } from '../../res/strings.js'
+import { AUTH_HOME_URL, AUTH_FORM_USERNAME_PROMPT, AUTH_FORM_PASSWORD_PROMPT, AUTH_FORM_200_MESSAGE, AUTH_FORM_401_MESSAGE, AUTH_FORM_500_MESSAGE, LOGIN_BUTTON_LABEL } from '../../res/strings.js'
+import { STATUS_REQUEST, STATUS_SUCCESS, STATUS_PREREQUEST } from '../../res/numbers.js'
+import LoadingAnimation from '../../res/components/loadingAnimation.js'
 
 /**
  * Authorization Login Form
- * <p>Route: {@link AUTH_LOGIN_LINK}</p>
+ * <p>Route: {@link AUTH_LOGIN_URL}</p>
  */
 export default class AuthForm extends React.Component {
   /**
+   * propTypes
+   * @property {Number} status Status of the login request
+   */
+  static get propTypes() {
+    return {
+      status: React.PropTypes.number
+    }
+  }
+
+  /**
    * Constructor
-   * @param {object} props
+   * @param {Object} props
    */
   constructor(props) {
     super(props)
     /**
-     * @type {object}
+     * @type {Object}
      * @property {string} username="" username
      * @property {string} password="" password
      */
@@ -24,7 +36,27 @@ export default class AuthForm extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.getStatus = this.handleStatus.bind(this)
+  }
+
+  /**
+   * Handles prop change
+   * @param {Object} nextProps Next props
+   * @emits {Redirect} Redirects if {@link STATUS_SUCCESS}
+   */
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.status == STATUS_SUCCESS) {
+      browserHistory.push(AUTH_HOME_URL)
+    }
+  }
+
+  /**
+   * Handles the mount event
+   * @emits {Redirect} Redirects if {@link STATUS_SUCCESS}
+   */
+  componentWillMount() {
+    if(this.props.status == STATUS_SUCCESS) {
+      browserHistory.push(AUTH_HOME_URL)
+    }
   }
 
   /**
@@ -44,41 +76,43 @@ export default class AuthForm extends React.Component {
    */
   handleSubmit(e) {
     e.preventDefault()
-    var creds = Object.assign({}, this.state)
-    this.props.onSubmit(creds)
+    this.props.onSubmit(this.state.username, this.state.password)
   }
 
   /**
-   * Renders the status of the login request
+   * Returns if the form is valid
+   * @param {String} username
+   * @param {String} password
+   * @return {Boolean} A boolean stating if the form is valid or not
+   */
+  isValid(username, password) {
+    return (username && password)
+  }
+
+  /**
+   * Renders the status of the login request (rendered on the right half)
    * @param {Number} status status of the login request
    * @return {ReactElement} A spinner or a card message depending on the status of the login request.
-   * <p>Uses {@link AUTH_FORM_200_MESSAGE}, {@link AUTH_FORM_401_MESSAGE}, and {@link AUTH_FORM_500_MESSAGE}</p>
+   * <ul style="list-style">
+   *    <li> Nothing at {@link STATUS_PREREQUEST} </li>
+   *    <li> Spinner at {@link STATUS_REQUEST} </li>
+   *    <li> Success msg at {@link STATUS_SUCCESS} </li>
+   * </ul>
+   * <p>Msgs: {@link AUTH_FORM_200_MESSAGE}, {@link AUTH_FORM_401_MESSAGE}, and {@link AUTH_FORM_500_MESSAGE}</p>
    */
   getStatus(status) {
     switch(status) {
-      case -1:
+      case STATUS_PREREQUEST:
+        return <span></span>
+      case STATUS_REQUEST:
         return (
-          <span></span>
-        )
-      case 0:
-        return (
-          <div className="spinner">
-            <div className="sk-cube-grid">
-              <div className="sk-cube sk-cube1"></div>
-              <div className="sk-cube sk-cube2"></div>
-              <div className="sk-cube sk-cube3"></div>
-              <div className="sk-cube sk-cube4"></div>
-              <div className="sk-cube sk-cube5"></div>
-              <div className="sk-cube sk-cube6"></div>
-              <div className="sk-cube sk-cube7"></div>
-              <div className="sk-cube sk-cube8"></div>
-              <div className="sk-cube sk-cube9"></div>
-            </div>
+          <div className="center-container">
+            <LoadingAnimation className="md" />
           </div>
         )
       default:
         var msg = ""
-        if(status == 200) msg = AUTH_FORM_200_MESSAGE
+        if(status == STATUS_SUCCESS) msg = AUTH_FORM_200_MESSAGE
         else if(status == 401) msg = AUTH_FORM_401_MESSAGE
         else if(status == 500) msg = AUTH_FORM_500_MESSAGE
         return (
@@ -98,12 +132,11 @@ export default class AuthForm extends React.Component {
    * <p>Uses {@link AUTH_FORM_USERNAME_PROMPT} and {@link AUTH_FORM_PASSWORD_PROMPT}</p>
    */
   render() {
-    var valid = false
-    if(this.state.username && this.state.password) { valid = true }
+    const valid = this.isValid(this.state.username, this.state.password)
     return (
       <form>
-        <div className="row">
-          <div className="col-xs-6">
+        <div className="row row-eq-height">
+          <div className="col-xs-6 no-float">
             <div className="row">
               <div className="form-group col-xs-12">
                 <label>{AUTH_FORM_USERNAME_PROMPT}</label>
@@ -118,11 +151,11 @@ export default class AuthForm extends React.Component {
             </div>
             <div className="row">
               <button type="button" disabled={!valid} className="btn btn-danger pull-right waves-effect" onClick={this.handleSubmit}>
-                <span className="glyphicon glyphicon-lock"></span>Login
+                <span className="glyphicon glyphicon-lock"></span>{LOGIN_BUTTON_LABEL}
               </button>
             </div>
           </div>
-          <div className="col-xs-6">
+          <div className="col-xs-6 no-float">
             {
               this.getStatus(this.props.status)
             }

@@ -20,7 +20,7 @@ function verifyToken(req, res, next) {
     var token = req.headers.authorization.slice(7)
     jwt.verify(token, credentials.jwt.secret, function(err, data) {
       if(err) { res.status(401).send() }
-      else if(data.user == 'admin') {
+      else if(data.username == 'admin') {
         next()
       }
       else {
@@ -42,7 +42,7 @@ module.exports = function(app) {
    * @apiGroup Authorization
    * @apiPermission none
    *
-   * @apiParam {String} user Username
+   * @apiParam {String} username Username
    * @apiParam {String} password Password
    *
    * @apiSuccess {String} token JSON Web Token used for authentication.
@@ -56,13 +56,14 @@ module.exports = function(app) {
    *
    */
   app.post('/api/login', function(req,res) {
-    if(req.body.user == credentials.credentials.user && req.body.password == credentials.credentials.password) {
-      jwt.sign({ user: 'admin' }, credentials.jwt.secret, { expiresIn: '7 days'}, function(err, token) {
+    console.log(req.body)
+    if(req.body.username == credentials.credentials.username && req.body.password == credentials.credentials.password) {
+      jwt.sign({ username: 'admin' }, credentials.jwt.secret, { expiresIn: '7 days'}, function(err, token) {
         if(err) {
           res.status(500).send()
         }
         else {
-          res.send({token: token, user: 'admin'})
+          res.send({token: token, username: 'admin'})
         }
       })
     }

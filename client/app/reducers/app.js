@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import { authorization } from './authorization.js'
+import { authReducer } from '../authorization/reducers.js'
 import { ladderApp } from './ladder.js'
 import { tournamentApp } from './tournament.js'
 
 let app = combineReducers({
-  authorization,
+  auth: authReducer,
   ladder: ladderApp,
   tournament: tournamentApp
 })

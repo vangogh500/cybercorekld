@@ -1,6 +1,13 @@
 import React from 'react'
 
+/**
+ * Loading Animation
+ */
 export default class LoadingAnimation extends React.Component {
+  /**
+   * Renders the loading animation
+   * @return {ReactElement} Loading animation use spin kit
+   */
   render() {
     return (
       <div className="spinner">

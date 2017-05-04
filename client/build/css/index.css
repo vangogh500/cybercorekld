@@ -263,6 +263,12 @@ form .btn {
   margin-bottom: 200px !important;
 }
 
+.spinner.md {
+  transform: none !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
 .spinner .sk-cube {
   background-color: #980008 !important;
 }
@@ -417,6 +423,8 @@ a.text-white:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .width-100 {
