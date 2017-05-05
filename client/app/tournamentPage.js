@@ -1,7 +1,7 @@
 import React from 'react'
 
 import TournamentsSync from './containers/tournamentApp/tournamentsSync.js'
-import ModalButton from './components/modalbutton.js'
+import ModalButton from './res/components/modalbutton.js'
 import AddTournamentFormSync from './containers/tournamentApp/addTournamentFormSync.js'
 
 export default class TournamentPage extends React.Component {

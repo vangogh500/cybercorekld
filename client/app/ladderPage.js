@@ -1,7 +1,7 @@
 import React from 'react'
 
 import LadderSync from './containers/laddersync.js'
-import ModalButton from './components/modalbutton.js'
+import ModalButton from './res/components/modalbutton.js'
 import LadderAddUserFormSync from './containers/ladderadduserformsync.js'
 
 export default class LadderPage extends React.Component {

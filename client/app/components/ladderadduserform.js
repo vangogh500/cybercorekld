@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { validateEmail } from '../util.js'
+import { validateEmail } from '../res/util.js'
 
 export default class LadderAddUserForm extends React.Component {
   constructor(props) {

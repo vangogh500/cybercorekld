@@ -13,7 +13,7 @@ function status(state = STATUS_PREREQUEST, action) {
 function username(state = '', action) {
   switch(action.type) {
     case FETCH_TOKEN:
-      return action.user
+      return action.username
     default:
       return state
   }

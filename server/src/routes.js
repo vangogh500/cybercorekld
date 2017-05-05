@@ -9,29 +9,12 @@ var Tournament = require('./models/tournament.js')
 var TournamentMatch = require('./models/tournamentMatch.js')
 var tournamentLib = require('./lib/tournament.js')
 var elo = require('./lib/elo.js')
+var Auth = require('./lib/auth.js')
 
 /**
  * @apiDefine admin User access only
  * Allows access to /auth
  */
-
-function verifyToken(req, res, next) {
-  if(req.headers.authorization) {
-    var token = req.headers.authorization.slice(7)
-    jwt.verify(token, credentials.jwt.secret, function(err, data) {
-      if(err) { res.status(401).send() }
-      else if(data.username == 'admin') {
-        next()
-      }
-      else {
-        res.status(401).send()
-      }
-    })
-  }
-  else {
-    res.status(401).send()
-  }
-}
 
 module.exports = function(app) {
 
@@ -94,7 +77,7 @@ module.exports = function(app) {
    *    500
    *
    */
-  app.post('/api/auth/onevone/user', verifyToken, function(req,res) {
+  app.post('/api/auth/onevone/user', Auth.restrict, function(req,res) {
     var newUser = new User({
       csm: req.body.user.csm,
       name: req.body.user.name,
@@ -119,7 +102,7 @@ module.exports = function(app) {
    * TODO: Seperate logic
    * TODO: take in userid
    */
-  app.delete('/api/auth/onevone/user', verifyToken, function(req,res) {
+  app.delete('/api/auth/onevone/user', Auth.restrict, function(req,res) {
     if(req.body.password === credentials.credentials.password) {
       OneVOneListing.findOne({ _id: req.body.listingId }, function(err, listing) {
         if(err) res.status(500).send()
@@ -148,15 +131,12 @@ module.exports = function(app) {
   })
 
   /**
-   * TODO: Either split logic or vary response with auth
-   * TODO: Return in property called users
-   * TODO: Order by created
    * @api {get} /users Get All Users
    * @apiName GetUsers
    * @apiGroup User
-   * @apiPermission admin
+   * @apiPermission none
    *
-   * @apiSuccess {json[]} users Array of users in order of most recent creation date
+   * @apiSuccess {json[]} users Array of users in order of most recent creation date (user data depends on permission level)
    *
    * @apiErrorExample {Number} Server Error
    *    500
@@ -164,20 +144,49 @@ module.exports = function(app) {
    *    404
    *
    */
-  app.get('/api/auth/users', verifyToken, function(req,res) {
-    User.find({}).exec(function(err,users) {
+  app.get('/api/users', Auth.checkToken, function(req,res) {
+    var Query = User.find({}).sort({ date: -1 })
+    if(!req.body.authorized) {
+      Query = Query.select({ lolName: 1, name: 1, teams: 1, creation: 1 })
+    }
+    Query.exec(function(err,users) {
       if(err) {
         res.status(500).send()
       }
-      else if(users) {
-        res.send(users)
-      }
       else {
-        res.status(404).send()
+        res.send({ users })
       }
     })
   })
 
+  /**
+   * @api {post} /user Add a new user
+   * @apiName AddUser
+   * @apiGroup User
+   * @apiPermission admin
+   *
+   * @apiParam {String} csm CSM
+   * @apiParam {String} [lolname] League ign
+   * @apiParam {String} [name] Name
+   * @apiParam {String} [email] Email.
+   *
+   * @apiSuccess {String} id User id
+   *
+   * @apiErrorExample {Number} Server Error
+   *    500
+   */
+  app.post('/api/auth/user', Auth.restrict, function(req, res) {
+    console.log(req)
+    new User({
+      csm: req.body.csm,
+      lolname: req.body.lolname,
+      name: req.body.name,
+      email: req.body.email
+    }).save((err) => {
+      if(err) { res.status(500).send() }
+      else { res.send({ id: this._id })}
+    })
+  })
 
   /**
    * TODO: Check if you want to populate
@@ -197,7 +206,7 @@ module.exports = function(app) {
    *    404
    *
    */
-  app.get('/api/auth/onevone/ladder', verifyToken, function(req,res) {
+  app.get('/api/auth/onevone/ladder', Auth.restrict, function(req,res) {
     OneVOneListing.find({}).sort({ kp: -1 }).populate('_user').populate('matches').exec(function(err, ladder) {
       if(err) {
         res.status(500).send()
@@ -330,7 +339,7 @@ module.exports = function(app) {
    *    404
    *
    */
-  app.post('/api/auth/team', verifyToken, function(req,res) {
+  app.post('/api/auth/team', Auth.restrict, function(req,res) {
     Tournament.findById(req.body.tournamentId, function(err, found) {
       if(err) {
         console.log(err)
@@ -413,7 +422,7 @@ module.exports = function(app) {
    *    404
    *
    */
-  app.post('/api/auth/tournament', verifyToken, function(req,res) {
+  app.post('/api/auth/tournament', Auth.restrict, function(req,res) {
     new Tournament({
       name: req.body.tournament.name,
       date: req.body.tournament.date,
@@ -434,7 +443,7 @@ module.exports = function(app) {
     })
   })
 
-  app.put('/api/auth/tournament/:tournamentId/:status', verifyToken, function(req,res) {
+  app.put('/api/auth/tournament/:tournamentId/:status', Auth.restrict, function(req,res) {
     req.params.status = req.params.status.replace("_", " ")
     Tournament.findById(req.params.tournamentId, function(err, found) {
       if(err) {
@@ -479,7 +488,7 @@ module.exports = function(app) {
    *    404
    *
    */
-  app.put('/api/auth/tournament/match/:id', verifyToken, function(req,res) {
+  app.put('/api/auth/tournament/match/:id', Auth.restrict, function(req,res) {
     const doc = {
       $set: {
         "sides.home.score": {
@@ -503,7 +512,7 @@ module.exports = function(app) {
     })
   })
 
-  app.post('/api/auth/onevone/match', verifyToken, function(req,res) {
+  app.post('/api/auth/onevone/match', Auth.restrict, function(req,res) {
     OneVOneListing.find({ $or: [{ _user: req.body.player_one._user}, { _user: req.body.player_two._user }]}, function(err, listings) {
       if(err) { res.status(500).send() }
       else {

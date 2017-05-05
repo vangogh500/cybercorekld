@@ -1,5 +1,5 @@
 import React from 'react'
-import ModalButton from '../modalbutton.js'
+import ModalButton from '../../res/components/modalbutton.js'
 import BracketFormSync from '../../containers/tournamentApp/bracketFormSync.js'
 
 export default class TournamentRightPane extends React.Component {

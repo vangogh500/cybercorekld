@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server.js",
+    "serve": "node ./src/server.js",
     "doc": "apidoc -i ./src -o ./doc"
   },
   "author": "",

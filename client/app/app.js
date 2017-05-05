@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { AUTH_HOME_URL, AUTH_LOGIN_URL } from './res/strings.js'
+import { AUTH_URL, AUTH_HOME_URL, AUTH_LOGIN_URL, USERS_HOME_URL } from './res/strings.js'
 
 import NavbarSync from './res/containers/navbarsync.js'
 import AuthLoginPage from './authorization/components/authLoginPage.js'
@@ -22,6 +22,9 @@ import TournamentListingSectionSync from './containers/tournamentApp/tournamentL
 import TournamentListingTeams from './components/tournamentApp/tournamentListingTeams.js'
 import TournamentListingBracket from './components/tournamentApp/tournamentListingBracket.js'
 
+import UsersApp from './users/containers/usersAppSync.js'
+import UsersHomePage from './users/components/UsersHomePage.js'
+
 import { loginFromStorage } from './authorization/actions.js'
 
 import app from './reducers/app.js'
@@ -35,13 +38,6 @@ ReactDOM.render((
         <Route path="/" component={NavbarSync}>
           <Route path={AUTH_LOGIN_URL} component={AuthLoginPage} />
           <Route path={AUTH_HOME_URL} component={AuthHomePage} />
-          <Route path="/auth/onevone" component={LadderAppSync}>
-            <Route component={LadderSection}>
-              <Route path="/auth/onevone/matches" component={MatchesPageSync} />
-              <Route path="/auth/onevone/ladder" component={LadderPage} />
-            </Route>
-            <Route path="/auth/onevone/user/:userId" component={UserPageSync} />
-          </Route>
           <Route component={TournamentsAppSync}>
             <Route path="/auth/tournaments" component={TournamentPage} />
             <Route path="/auth/tournaments/teams" component={TeamsPageSync} />
@@ -49,6 +45,9 @@ ReactDOM.render((
               <IndexRoute component={TournamentListingTeams} />
               <Route path="/auth/tournament/:teamId/bracket" component={TournamentListingBracket} />
             </Route>
+          </Route>
+          <Route component={UsersApp}>
+            <Route path={AUTH_URL + USERS_HOME_URL} component={UsersHomePage} />
           </Route>
         </Route>
       </Router>

@@ -2,7 +2,7 @@ import React from 'react'
 
 import Teams from './teams.js'
 import AddTeamFormSync from '../../containers/tournamentApp/addTeamFormSync.js'
-import ModalButton from '../modalbutton.js'
+import ModalButton from '../../res/components/modalbutton.js'
 
 class Center extends React.Component {
   render() {

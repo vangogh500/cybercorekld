@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ModalButton from './components/modalbutton.js'
+import ModalButton from './res/components/modalbutton.js'
 import LadderAddMatchFormSync from './containers/addmatchformsync.js'
 import MatchesSync from './containers/matchesSync.js'
 

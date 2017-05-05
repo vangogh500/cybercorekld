@@ -2,7 +2,8 @@ import React from 'react'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
-import { AUTH_LOGIN_URL, AUTH_INVALID_PROMPT } from '../res/strings.js'
+import { AUTH_LOGIN_URL } from '../res/strings.js'
+import { AUTH_INVALID_PROMPT } from './res/strings.js'
 import { STATUS_SUCCESS } from '../res/numbers.js'
 
 const mapStateToProps = (state) => {

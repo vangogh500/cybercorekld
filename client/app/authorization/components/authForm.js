@@ -1,6 +1,7 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import { AUTH_HOME_URL, AUTH_FORM_USERNAME_PROMPT, AUTH_FORM_PASSWORD_PROMPT, AUTH_FORM_200_MESSAGE, AUTH_FORM_401_MESSAGE, AUTH_FORM_500_MESSAGE, LOGIN_BUTTON_LABEL } from '../../res/strings.js'
+import {  AUTH_HOME_URL } from '../../res/strings.js'
+import { AUTH_FORM_USERNAME_PROMPT, AUTH_FORM_PASSWORD_PROMPT, AUTH_FORM_200_MESSAGE, AUTH_FORM_401_MESSAGE, AUTH_FORM_500_MESSAGE, LOGIN_BUTTON_LABEL } from '../res/strings.js'
 import { STATUS_REQUEST, STATUS_SUCCESS, STATUS_PREREQUEST } from '../../res/numbers.js'
 import LoadingAnimation from '../../res/components/loadingAnimation.js'
 
@@ -73,6 +74,7 @@ export default class AuthForm extends React.Component {
    * Handle submit form event
    * <p>Valid: If there is a username and password</p>
    * @param {SyntheticEvent} e
+   * @emits {ReduxAction} loginFromServer
    */
   handleSubmit(e) {
     e.preventDefault()

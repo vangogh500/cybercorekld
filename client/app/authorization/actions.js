@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
 import {STATUS_REQUEST} from '../res/numbers.js'
+import { resolve } from '../res/util.js'
 
 /**
  * Action type for fetching authorization
@@ -24,12 +25,6 @@ function loginResponse(status, username, token) {
   }
 }
 
-function resolve(response, cb) {
-  response.json().then(json =>
-    cb(response.status, json)
-  )
-}
-
 /**
  * Fetch authorization from server using credentials
  * @param {String} username username
@@ -49,19 +44,16 @@ export function loginFromServer(username, password) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ username, password })
-    }).then(response => {
-      if(response.status !== 200) { dispatch(loginResponse(response.status, null, null)) }
-      else {
-        resolve(response, (status, data) => {
-          if(typeof(Storage) !== 'undefined') {
-            window.sessionStorage.setItem('username', data.username)
-            window.sessionStorage.setItem('token', data.token)
-          }
-          dispatch(loginResponse(status, data.username, data.token))
-        })
+    }).then(response => resolve(response, function(status, data) {
+      if(data) {
+        if(typeof(Storage) !== 'undefined') {
+          window.sessionStorage.setItem('username', data.username)
+          window.sessionStorage.setItem('token', data.token)
+        }
+        dispatch(loginResponse(status, data.username, data.token))
       }
-    })
-
+      else { dispatch(loginResponse(response.status, null, null)) }
+    }))
   }
 }
 

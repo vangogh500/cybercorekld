@@ -5,7 +5,7 @@ import { logout } from '../../authorization/actions.js'
 const mapStateToProps = (state) => {
   return {
     status: state.auth.status,
-    user: state.auth.user
+    username: state.auth.username
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { browserHistory } from 'react-router'
 
 import MatchListing from './components/matchListing.js'
-import ModalButton from './components/modalbutton.js'
+import ModalButton from './res/components/modalbutton.js'
 import ConfirmationForm from './components/confirmationForm.js'
 import LoadingAnimation from './components/loadingAnimation.js'
 

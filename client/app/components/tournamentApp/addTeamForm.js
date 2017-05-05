@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { validateURL } from '../../util.js'
+import { validateURL } from '../../res/util.js'
 import LoadingAnimation from '../loadingAnimation.js'
 import AutoFillUser from '../autoFillUser.js'
 

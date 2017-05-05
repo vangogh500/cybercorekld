@@ -1,7 +1,8 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
 
-import {AUTH_LOGIN_URL, LOGOUT_BUTTON_LABEL} from '../strings.js'
+import {AUTH_LOGIN_URL} from '../strings.js'
+import {LOGOUT_BUTTON_LABEL} from '../../authorization/res/strings.js'
 import { STATUS_SUCCESS } from '../numbers.js'
 
 /**
@@ -11,10 +12,14 @@ export default class Navbar extends React.Component {
   /**
    * propTypes
    * @property {Number} status Status of the login request
+   * @property {String} username Username for the account
+   * @property {ReactElement} children JSX to present under the navbar
    */
   static get propTypes() {
     return {
-      status: React.PropTypes.number
+      status: React.PropTypes.number,
+      username: React.PropTypes.string,
+      children: React.PropTypes.element
     }
   }
 
@@ -57,7 +62,7 @@ export default class Navbar extends React.Component {
               this.props.status == STATUS_SUCCESS ?
                 (<ul className="nav navbar-nav pull-right">
                   <li>
-                    <span className="glyphicon glyphicon-user"></span>{this.props.user}
+                    <span className="glyphicon glyphicon-user"></span>{this.props.username}
                   </li>
                   <li>
                     <button type="button" className="btn btn-danger waves-effect" onClick={this.handleOnLogout}>

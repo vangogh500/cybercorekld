@@ -2,7 +2,7 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-import { validateURL } from '../../util.js'
+import { validateURL } from '../../res/util.js'
 import LoadingAnimation from '../loadingAnimation.js'
 
 import 'react-datepicker/dist/react-datepicker.css'
