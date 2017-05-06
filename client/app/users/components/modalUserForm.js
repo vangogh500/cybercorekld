@@ -9,7 +9,6 @@ import { STATUS_REQUEST, STATUS_SUCCESS, STATUS_PREREQUEST } from '../../res/num
 import { createForm } from '../../res/hocs.js'
 
 /**
- * TODO: Add redirect with invalid auth
  * Modal form to add users
  */
 class ModalUserForm extends React.Component {
@@ -19,18 +18,18 @@ class ModalUserForm extends React.Component {
    */
   constructor(props) {
     super(props)
-    /**
-     * @type {Object}
-     * @property {String} csm="" username
-     * @property {String} lolname="" password
-     * @property {String} email="" email
-     * @property {String} name="" name
-     * @property {Number} state=STATUS_PREREQUEST Status of the form.
-     */
     this.handleStatus = this.handleStatus.bind(this)
     this.renderForm = this.renderForm.bind(this)
   }
 
+  /**
+   * initialState
+   * @property {String} csm="" username
+   * @property {String} lolname="" password
+   * @property {String} email="" email
+   * @property {String} name="" name
+   * @property {Number} state=STATUS_PREREQUEST Status of the form.
+   */
   static get initialState() {
     return {
       csm: "",

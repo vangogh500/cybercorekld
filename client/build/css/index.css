@@ -145,7 +145,7 @@ body.overflow-x-hidden {
   color: #FFF;
 }
 
-.dark-red .panel-heading {
+.dark-red.panel-heading {
   background-color: #980008 !important;
   border: none;
   color: #E8E8E8 !important;

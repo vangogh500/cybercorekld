@@ -5,10 +5,26 @@ import { STATUS_REQUEST, STATUS_PREREQUEST, STATUS_SUCCESS } from './numbers.js'
 import { trimFormContent } from './util.js'
 import LoadingAnimation from './components/loadingAnimation.js'
 
+/**
+ * Creates a form component out of the Component
+ * @param {ReactComponent} WrappedComponent The component to wrap
+ * @return {ReactComponent} Form component
+ */
 export function createForm(WrappedComponent) {
+  /**
+   * @type {ReactComponent}
+   * @property {Function} constructor Constructor for the function. Sets state to WrappedComponent.initialState
+   * @property {Function} handleChange Change handler for the form.
+   * @property {Function} handleSubmit Submits the form content (uses props.submit)
+   * @property {Function} render Renders the WrappedComponent and will pass valid as a prop
+   */
   return class extends React.Component {
     constructor(props) {
       super(props)
+      /**
+       * @type {Object}
+       * @property {status} status of the form
+       */
       this.state = {
         ...WrappedComponent.initialState,
         status: STATUS_PREREQUEST

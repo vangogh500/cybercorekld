@@ -2,13 +2,12 @@ import React from 'react'
 import { Link } from 'react-router'
 import { AUTH_HOME_TITLE } from '../res/strings.js'
 import { AUTH_URL, LADDERS_HOME_URL, TOURNAMENTS_HOME_URL, USERS_HOME_URL, USERS_LABEL, TOURNAMENTS_LABEL, LADDERS_LABEL } from '../../res/strings.js'
-import { withAuth } from '../hocs.js'
 
 /**
  * Authorization Home Page
  * <p>Route: {@link AUTH_HOME_URL}</p>
  */
-class AuthHomePage extends React.Component {
+export default class AuthHomePage extends React.Component {
   /**
    * Set's the page title to {@link AUTH_HOME_TITLE}
    */
@@ -53,5 +52,3 @@ class AuthHomePage extends React.Component {
     )
   }
 }
-
-export default withAuth(AuthHomePage)

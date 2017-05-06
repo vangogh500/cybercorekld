@@ -1,8 +1,6 @@
 import React from 'react'
 
 import ModalAddUserButton from './ModalAddUserButton.js'
-import { USER_LISTING_HEADER } from '../res/strings.js'
-
 import UsersListing from '../containers/subscribedUsersListingSync.js'
 
 /**
@@ -20,16 +18,17 @@ export default class UsersHomePage extends React.Component {
    */
   render() {
     return (
-      <div>
+      <div className="row">
+        <div className="col-xs-2">
+        </div>
         <div className="col-xs-8">
           <div className="container-fluid">
-            <div className="panel panel-default dark-red">
-              <div className="panel-heading text-center"><h4>{USER_LISTING_HEADER}</h4></div>
-            </div>
             <UsersListing />
           </div>
         </div>
-        <ModalAddUserButton />
+        <div className="col-xs-2">
+          <ModalAddUserButton />
+        </div>
       </div>
     )
   }

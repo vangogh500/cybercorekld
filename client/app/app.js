@@ -7,6 +7,8 @@ import thunkMiddleware from 'redux-thunk'
 
 import { AUTH_URL, AUTH_HOME_URL, AUTH_LOGIN_URL, USERS_HOME_URL } from './res/strings.js'
 
+import AuthApp from './authorization/containers/authAppSync.js'
+
 import NavbarSync from './res/containers/navbarsync.js'
 import AuthLoginPage from './authorization/components/authLoginPage.js'
 import AuthHomePage from './authorization/components/AuthHomePage.js'
@@ -37,17 +39,19 @@ ReactDOM.render((
       <Router history={browserHistory}>
         <Route path="/" component={NavbarSync}>
           <Route path={AUTH_LOGIN_URL} component={AuthLoginPage} />
-          <Route path={AUTH_HOME_URL} component={AuthHomePage} />
-          <Route component={TournamentsAppSync}>
-            <Route path="/auth/tournaments" component={TournamentPage} />
-            <Route path="/auth/tournaments/teams" component={TeamsPageSync} />
-            <Route path="/auth/tournament/:teamId" component={TournamentListingSectionSync}>
-              <IndexRoute component={TournamentListingTeams} />
-              <Route path="/auth/tournament/:teamId/bracket" component={TournamentListingBracket} />
+          <Route component={AuthApp}>
+            <Route path={AUTH_HOME_URL} component={AuthHomePage} />
+            <Route component={TournamentsAppSync}>
+              <Route path="/auth/tournaments" component={TournamentPage} />
+              <Route path="/auth/tournaments/teams" component={TeamsPageSync} />
+              <Route path="/auth/tournament/:teamId" component={TournamentListingSectionSync}>
+                <IndexRoute component={TournamentListingTeams} />
+                <Route path="/auth/tournament/:teamId/bracket" component={TournamentListingBracket} />
+              </Route>
             </Route>
-          </Route>
-          <Route component={UsersApp}>
-            <Route path={AUTH_URL + USERS_HOME_URL} component={UsersHomePage} />
+            <Route component={UsersApp}>
+              <Route path={AUTH_URL + USERS_HOME_URL} component={UsersHomePage} />
+            </Route>
           </Route>
         </Route>
       </Router>
