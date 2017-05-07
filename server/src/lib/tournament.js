@@ -2,8 +2,6 @@ var TournamentMatch = require('../models/tournamentMatch.js')
 var Team = require('../models/team.js')
 var async = require('async')
 
-const abc = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N']
-
 function shuffleArray(array) {
   var newArray = array.slice()
   for (var i = newArray.length - 1; i > 0; i--) {

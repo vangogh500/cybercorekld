@@ -23,7 +23,7 @@ export default class UsersListing extends React.Component {
           {
             this.props.data.map((user, i) => {
               return (
-                <UserListItem key={i} idx={i} user={user} />
+                <UserListItem key={user.id} idx={i} user={user} />
               )
             })
           }

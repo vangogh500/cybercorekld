@@ -92,7 +92,8 @@ module.exports = function(app) {
       else {
         newOneVOneListing.save(function(err) {
           if(err) { res.status(500).send() }
-          else { res.send({ userId: newUser._id, entryId: newOneVOneListing._id }) }
+          else {
+            res.send({ userId: newUser._id, entryId: newOneVOneListing._id }) }
         })
       }
     })
@@ -145,7 +146,7 @@ module.exports = function(app) {
    *
    */
   app.get('/api/users', Auth.checkToken, function(req,res) {
-    var Query = User.find({}).sort({ date: -1 })
+    var Query = User.find({}).sort({ creation: -1 })
     if(!req.body.authorized) {
       Query = Query.select({ lolName: 1, name: 1, teams: 1, creation: 1 })
     }
@@ -176,15 +177,15 @@ module.exports = function(app) {
    *    500
    */
   app.post('/api/auth/user', Auth.restrict, function(req, res) {
-    console.log(req)
     new User({
       csm: req.body.csm,
       lolname: req.body.lolname,
       name: req.body.name,
       email: req.body.email
-    }).save((err) => {
-      if(err) { res.status(500).send() }
-      else { res.send({ id: this._id })}
+    }).save((err, user) => {
+      if(err) { console.log(err)
+        res.status(500).send() }
+      else {res.send({ id: user._id })}
     })
   })
 
@@ -250,7 +251,6 @@ module.exports = function(app) {
   })
 
   /**
-   * TODO: Return in property called tournaments
    * TODO: Check if you want to populate matches
    * @api {get} /tournaments Get All Tournaments
    * @apiName GetTournaments
@@ -266,21 +266,12 @@ module.exports = function(app) {
    *
    */
   app.get('/api/auth/tournaments', function(req,res) {
-    Tournament.find({}).sort({ date: -1 }).populate('matches').exec(function(err, tournaments) {
+    Tournament.find({}).sort({ date: -1 }).exec(function(err, tournaments) {
       if(err) {
         res.status(500)
       }
-      else if(tournaments) {
-        tournaments.forEach((tournament) => {
-          if(tournament.date < Date.now()) {
-            tournament.status = 'completed'
-          }
-          tournament.save()
-        })
-        res.send(tournaments)
-      }
       else {
-        res.status(404).send()
+        res.send({tournaments})
       }
     })
   })
@@ -400,21 +391,23 @@ module.exports = function(app) {
   })
 
   /**
-   * TODO: Change req.body
-   * TODO: Change tournamentId to tournamentid
    * @api {post} /team Create Tournament
    * @apiName CreateTournament
    * @apiGroup Tournament
-   * @apiPermission none
+   * @apiPermission admin
    *
    * @apiParam {String} name Tournament name.
    * @apiParam {date} date Tournament date.
-   * @apiParam {String} [thumbnail] URL to tournament thumbnail.
-   * @apiParam {String} [banner] URL to tournament banner.
+   * @apiParam {String} game The game the Tournament is for.
+   * @apiParam {String} type The type of Tournament (i.e 1v1 or teams)
+   * @apiParam {String} [status="scheduled"] Status of the tournament (i.e. "in progress", "scheduled", "completed")
    * @apiParam {String} [facebook] Facebook link.
    * @apiParam {String} [stream] Stream link.
+   * @apiParam {String} [gallery] Gallery link.
+   * @apiParam {String} [thumbnail] URL to tournament thumbnail.
+   * @apiParam {String} [banner] URL to tournament banner.
    *
-   * @apiSuccess {String} tournamentid Tournament ID.
+   * @apiSuccess {String} id Tournament ID.
    *
    * @apiErrorExample {Number} Server Error
    *    500
@@ -424,22 +417,28 @@ module.exports = function(app) {
    */
   app.post('/api/auth/tournament', Auth.restrict, function(req,res) {
     new Tournament({
-      name: req.body.tournament.name,
-      date: req.body.tournament.date,
-      img: {
-        thumbnail: req.body.tournament.thumbnail,
-        banner: req.body.tournament.banner
-      },
+      name: req.body.name,
+      date: req.body.date,
+      game: req.body.game,
+      type: req.body.type,
+      status: req.body.status,
       links: {
-        fcbk: req.body.tournament.fcbk,
-        stream: req.body.tournament.stream
+        facebook: req.body.facebook,
+        stream: req.body.stream,
+        gallery: req.body.gallery
+      },
+      imgs: {
+        banner: req.body.banner,
+        thumbnail: req.body.thumbnail
       }
     }).save((err, tournament) => {
       if(err) {
         console.log(err)
         res.status(500).send()
       }
-      else res.send({ tournamentId: tournament._id})
+      else {
+        res.send({ id: tournament._id})
+      }
     })
   })
 

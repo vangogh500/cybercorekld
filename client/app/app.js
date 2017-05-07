@@ -17,10 +17,13 @@ import LadderPage from './ladderPage.js'
 import MatchesPageSync from './containers/matchesPageSync.js'
 import UserPageSync from './containers/userPageSync.js'
 import LadderAppSync from './containers/ladderAppSync.js'
-import TournamentsAppSync from './containers/tournamentApp/tournamentsAppSync.js'
+import TournamentsApp from './tournaments/containers/tournamentsAppSync.js'
+import TournamentsHomePage from './tournaments/components/tournamentsHomePage.js'
 import TournamentPage from './tournamentPage.js'
 import TeamsPageSync from './containers/tournamentApp/teamsPageSync.js'
-import TournamentListingSectionSync from './containers/tournamentApp/tournamentListingSectionSync.js'
+
+import TournamentListingApp from './tournaments/containers/subscribedTournamentListingAppSync.js'
+
 import TournamentListingTeams from './components/tournamentApp/tournamentListingTeams.js'
 import TournamentListingBracket from './components/tournamentApp/tournamentListingBracket.js'
 
@@ -41,12 +44,11 @@ ReactDOM.render((
           <Route path={AUTH_LOGIN_URL} component={AuthLoginPage} />
           <Route component={AuthApp}>
             <Route path={AUTH_HOME_URL} component={AuthHomePage} />
-            <Route component={TournamentsAppSync}>
-              <Route path="/auth/tournaments" component={TournamentPage} />
+            <Route component={TournamentsApp}>
+              <Route path="/auth/tournaments" component={TournamentsHomePage} />
               <Route path="/auth/tournaments/teams" component={TeamsPageSync} />
-              <Route path="/auth/tournament/:teamId" component={TournamentListingSectionSync}>
-                <IndexRoute component={TournamentListingTeams} />
-                <Route path="/auth/tournament/:teamId/bracket" component={TournamentListingBracket} />
+              <Route path="/auth/tournament/:tournamentId" component={TournamentListingApp}>
+                <IndexRoute center={<div></div>} right={<div></div>} />
               </Route>
             </Route>
             <Route component={UsersApp}>

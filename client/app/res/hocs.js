@@ -47,7 +47,7 @@ export function createForm(WrappedComponent) {
     }
     render() {
       const valid = this.component ? this.component.validate(this.state) : false
-      return <WrappedComponent valid={valid} ref={(component) => { this.component = component }} handleChange={this.handleChange} handleSubmit={this.handleSubmit} status={this.state.status} />
+      return <WrappedComponent formData={this.state} valid={valid} ref={(component) => { this.component = component }} handleChange={this.handleChange} handleSubmit={this.handleSubmit} status={this.state.status} />
     }
   }
 }
@@ -65,7 +65,7 @@ export function subscribe(WrappedComponent, appName) {
         case STATUS_REQUEST:
           return <LoadingAnimation />
         case STATUS_SUCCESS:
-          return <WrappedComponent />
+          return React.cloneElement(<WrappedComponent location={this.props.location} params={this.props.params} />, this.props)
         default:
           return <span></span>
       }

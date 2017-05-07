@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch'
 
 import {STATUS_REQUEST} from '../res/numbers.js'
 import { resolve } from '../res/util.js'
+import { normalizeUsers } from '../res/normalizer.js'
 
 /**
  * Action type for fetching users
@@ -21,11 +22,12 @@ function requestUsers() {
   }
 }
 
-function requestResponse(status, users) {
+function requestResponse(status, users, userList) {
   return {
     type: FETCH_USERS,
     status,
-    users
+    users,
+    userList
   }
 }
 
@@ -52,7 +54,10 @@ export function fetchUsers() {
         'Authorization': 'Bearer ' + getState().auth.token
       }
     }).then(response => resolve(response, (status, data) => {
-        dispatch(requestResponse(status, data ? data.users : null))
+      console.log(data)
+      const normalized = data ? normalizeUsers(data) : null
+      console.log(normalized)
+      dispatch(requestResponse(status, normalized.entities.users, normalized.result.users))
     }))
   }
 }

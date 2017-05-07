@@ -7,7 +7,7 @@ import ModalButton from '../../res/components/modalbutton.js'
 class Center extends React.Component {
   render() {
     return (
-      <Teams teams={this.props.tournament.teams} />
+      <div></div>
     )
   }
 }
@@ -23,7 +23,7 @@ class ModalAddTeam extends React.Component {
             <h4>Add Team</h4>
           </div>
           <div className="modal-body">
-            <AddTeamFormSync tournamentId={this.props.tournament.id} />
+          
           </div>
         </div>
       </ModalButton>

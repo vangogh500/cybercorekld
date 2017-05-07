@@ -3,7 +3,7 @@ var Schema = mongoose.Schema
 
 var userSchema = mongoose.Schema({
   csm: { type: String, required: true, unique: true },
-  lolName: { type: String, unique: true },
+  lolName: { type: String },
   name: String,
   email: String,
   teams: [{
@@ -19,4 +19,4 @@ userSchema.set('toJSON', {
   transform: function (doc, ret) {   delete ret._id  }
 });
 
-module.exports = mongoose.model('Users', userSchema)
+module.exports = mongoose.model('User', userSchema)

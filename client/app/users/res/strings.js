@@ -5,8 +5,6 @@
  */
 export const USER_LISTING_HEADER = "User Listing"
 
-//
-
 // --------------- FORM LABELS ---------------------------------
 /**
 * Title for {@link ModalUserForm}

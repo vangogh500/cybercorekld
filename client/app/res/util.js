@@ -49,3 +49,18 @@ export function trimFormContent(formContent) {
   }
   return toTrim
 }
+
+/**
+ * Wraps the content in an emulated synthetic event
+ * @param {Any} content The content to wrap.
+ * @param {String} name The source of the emulated event.
+ * @return {Object} An emulation of a synthetic event
+ */
+ export function emulateSyntheticEvent(content, name) {
+   return {
+     target: {
+       name,
+       value: content
+     }
+   }
+ }
